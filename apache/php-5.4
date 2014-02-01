@@ -1,0 +1,24 @@
+<VirtualHost *:8054>
+    ServerAdmin webmaster@localhost
+
+    DocumentRoot /var/www
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory /var/www/>
+        Options FollowSymLinks +ExecCGI
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+
+
+    FCGIWrapper /phpfarm/inst/php-5.4.24/bin/php-cgi .php
+    AddHandler fcgid-script .php
+    FcgidFixPathinfo 1
+
+    LogLevel warn
+    ErrorLog ${APACHE_LOG_DIR}/error-5.4.log
+    CustomLog ${APACHE_LOG_DIR}/access-5.4.log combined
+</VirtualHost>
