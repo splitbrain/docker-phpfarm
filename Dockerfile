@@ -21,10 +21,13 @@ RUN cd /phpfarm/src && ./compile.sh 5.3.28
 RUN cd /phpfarm/src && ./compile.sh 5.4.24
 RUN cd /phpfarm/src && ./compile.sh 5.5.8
 
+# remove sources to save space
+RUN rm -rf /phpfarm/src
+
 # reconfigure Apache
 RUN rm -f /var/www/index.html
 ADD apache/index.php /var/www/index.php
-ADD apache/ports /etc/apache2/conf.d/ports
+ADD apache/phpfarm /etc/apache2/conf.d/phpfarm
 ADD apache/php-5.2 /etc/apache2/sites-available/php-5.2
 ADD apache/php-5.3 /etc/apache2/sites-available/php-5.3
 ADD apache/php-5.4 /etc/apache2/sites-available/php-5.4
@@ -34,8 +37,15 @@ RUN a2ensite php-5.3
 RUN a2ensite php-5.4
 RUN a2ensite php-5.5
 
+# set path
+ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
+
 # expose the ports
 EXPOSE 8052
 EXPOSE 8053
 EXPOSE 8054
 EXPOSE 8055
+
+# run it
+ENTRYPOINT ["apache2ctl"]
+CMD ["-D", "FOREGROUND"]

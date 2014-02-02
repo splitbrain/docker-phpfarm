@@ -1,0 +1,10 @@
+# general config for the phpfarm setup
+
+# global FCGI config
+FcgidFixPathinfo 1
+
+# listen on these ports
+Listen 8052
+Listen 8053
+Listen 8054
+Listen 8055
