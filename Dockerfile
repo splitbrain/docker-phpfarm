@@ -16,13 +16,9 @@ RUN git clone git://git.code.sf.net/p/phpfarm/code phpfarm
 ADD phpfarm/custom-options.sh /phpfarm/src/custom-options.sh
 ADD phpfarm/custom-options-5.2.17.sh /phpfarm/src/custom-options-5.2.17.sh
 ADD phpfarm/custom-php.ini /phpfarm/src/custom-php.ini
-RUN cd /phpfarm/src && ./compile.sh 5.2.17
-RUN cd /phpfarm/src && ./compile.sh 5.3.28
-RUN cd /phpfarm/src && ./compile.sh 5.4.24
-RUN cd /phpfarm/src && ./compile.sh 5.5.8
 
-# remove sources to save space
-RUN rm -rf /phpfarm/src
+# compile, then delete sources (saves space)
+RUN cd /phpfarm/src && ./compile.sh 5.2.17 && ./compile.sh 5.3.28 && ./compile.sh 5.4.24 && ./compile.sh 5.5.8 && rm -rf /phpfarm/src
 
 # reconfigure Apache
 RUN rm -f /var/www/index.html
@@ -36,6 +32,7 @@ RUN a2ensite php-5.2
 RUN a2ensite php-5.3
 RUN a2ensite php-5.4
 RUN a2ensite php-5.5
+RUN a2enmod rewrite
 
 # set path
 ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
@@ -47,5 +44,6 @@ EXPOSE 8054
 EXPOSE 8055
 
 # run it
-ENTRYPOINT ["apache2ctl"]
-CMD ["-D", "FOREGROUND"]
+ADD apache/run.sh run.sh
+ENTRYPOINT ["/bin/bash"]
+CMD ["/run.sh"]
