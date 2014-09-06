@@ -41,9 +41,9 @@ COPY phpfarm /phpfarm/src/
 # compile, then delete sources (saves space)
 RUN cd /phpfarm/src && \
     ./compile.sh 5.2.17 && \
-    ./compile.sh 5.3.28 && \
-    ./compile.sh 5.4.24 && \
-    ./compile.sh 5.5.8 && \
+    ./compile.sh 5.3.29 && \
+    ./compile.sh 5.4.32 && \
+    ./compile.sh 5.5.16 && \
     rm -rf /phpfarm/src && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
