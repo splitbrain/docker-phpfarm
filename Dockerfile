@@ -44,6 +44,7 @@ RUN cd /phpfarm/src && \
     ./compile.sh 5.3.29 && \
     ./compile.sh 5.4.32 && \
     ./compile.sh 5.5.16 && \
+    ./compile.sh 5.6.1 && \
     rm -rf /phpfarm/src && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -54,14 +55,14 @@ RUN rm -rf /var/www/*
 COPY var-www /var/www/
 COPY apache  /etc/apache2/
 
-RUN a2ensite php-5.2 php-5.3 php-5.4 php-5.5
+RUN a2ensite php-5.2 php-5.3 php-5.4 php-5.5 php-5.6
 RUN a2enmod rewrite
 
 # set path
 ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
 
 # expose the ports
-EXPOSE 8052 8053 8054 8055
+EXPOSE 8052 8053 8054 8055 8056
 
 # run it
 COPY run.sh /run.sh

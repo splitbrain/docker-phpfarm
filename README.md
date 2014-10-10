@@ -11,6 +11,7 @@ Port | PHP Version
 8053 | 5.3.29
 8054 | 5.4.32
 8055 | 5.5.16
+8056 | 5.6.1
 
 Building the image
 ------------------
@@ -42,7 +43,7 @@ local machine. The current working directory will be used as the document root f
 the Apache server and the server it self will run with the same user id as your current
 user.
 
-    docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 splitbrain/phpfarm
+    docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 -p 8056:8056 splitbrain/phpfarm
 
 Above command will also remove the container again when the process is aborted with
 CTRL-C. While running the Apache and PHP error log is shown on STDOUT.
