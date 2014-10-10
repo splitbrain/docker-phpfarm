@@ -2,7 +2,7 @@ phpfarm for docker
 ==================
 
 This is a build file to create a [phpfarm](http://sourceforge.net/projects/phpfarm/)
-setup. The resulting docker image will run Apache on 4 different ports with 4
+setup. The resulting docker image will run Apache on 5 different ports with 5
 different PHP versions:
 
 Port | PHP Version
