@@ -3,7 +3,7 @@
 #
 
 # we use Debian as the host OS
-FROM debian:wheezy
+FROM philcryer/min-wheezy:latest
 
 MAINTAINER Andreas Gohr, andi@splitbrain.org
 
