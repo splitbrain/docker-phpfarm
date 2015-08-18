@@ -42,9 +42,9 @@ COPY phpfarm /phpfarm/src/
 RUN cd /phpfarm/src && \
     ./compile.sh 5.2.17 && \
     ./compile.sh 5.3.29 && \
-    ./compile.sh 5.4.32 && \
-    ./compile.sh 5.5.16 && \
-    ./compile.sh 5.6.1 && \
+    ./compile.sh 5.4.44 && \
+    ./compile.sh 5.5.28 && \
+    ./compile.sh 5.6.12 && \
     rm -rf /phpfarm/src && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
