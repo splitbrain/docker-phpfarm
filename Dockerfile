@@ -33,7 +33,7 @@ RUN apt-get update && \
     libmhash-dev
 
 # install and run the phpfarm script
-RUN git clone git://git.code.sf.net/p/phpfarm/code phpfarm
+RUN git clone https://github.com/cweiske/phpfarm.git phpfarm
 
 # add customized configuration
 COPY phpfarm /phpfarm/src/
