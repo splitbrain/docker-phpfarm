@@ -1,0 +1,23 @@
+<VirtualHost *:8070>
+    ServerAdmin webmaster@localhost
+
+    DocumentRoot /var/www
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory /var/www/>
+        Options FollowSymLinks +ExecCGI
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+
+
+    FCGIWrapper /phpfarm/inst/php-7.0/bin/php-cgi .php
+    AddHandler fcgid-script .php
+
+    LogLevel warn
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>

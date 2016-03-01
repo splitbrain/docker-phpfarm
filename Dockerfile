@@ -30,7 +30,9 @@ RUN apt-get update && \
     libmcrypt-dev \
     libt1-dev \
     libltdl-dev \
-    libmhash-dev
+    libmhash-dev \
+    libmysqlclient-dev
+
 
 # install and run the phpfarm script
 RUN git clone https://github.com/cweiske/phpfarm.git phpfarm
@@ -39,15 +41,7 @@ RUN git clone https://github.com/cweiske/phpfarm.git phpfarm
 COPY phpfarm /phpfarm/src/
 
 # compile, then delete sources (saves space)
-RUN cd /phpfarm/src && \
-    ./compile.sh 5.2.17 && \
-    ./compile.sh 5.3.29 && \
-    ./compile.sh 5.4.44 && \
-    ./compile.sh 5.5.28 && \
-    ./compile.sh 5.6.12 && \
-    rm -rf /phpfarm/src && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN cd /phpfarm/src && ./docker.sh
 
 # reconfigure Apache
 RUN rm -rf /var/www/*
@@ -55,16 +49,16 @@ RUN rm -rf /var/www/*
 COPY var-www /var/www/
 COPY apache  /etc/apache2/
 
-RUN a2ensite php-5.2 php-5.3 php-5.4 php-5.5 php-5.6
+RUN a2ensite php-5.2 php-5.3 php-5.4 php-5.5 php-5.6 php-7.0
 RUN a2enmod rewrite
 
 # set path
 ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
 
 # expose the ports
-EXPOSE 8052 8053 8054 8055 8056
+EXPOSE 8052 8053 8054 8055 8056 8070
 
 # run it
+WORKDIR /var/www
 COPY run.sh /run.sh
-ENTRYPOINT ["/bin/bash"]
-CMD ["/run.sh"]
+CMD ["/bin/bash", "/run.sh"]

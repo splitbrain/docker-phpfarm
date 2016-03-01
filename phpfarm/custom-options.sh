@@ -7,6 +7,7 @@ fi
 
 
 configoptions="$configoptions \
+    --with-pdo-mysql \
     --enable-fastcgi \
     --with-bz2 \
     --with-curl \
