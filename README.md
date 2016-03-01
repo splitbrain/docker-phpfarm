@@ -5,14 +5,14 @@ This is a build file to create a [phpfarm](http://sourceforge.net/projects/phpfa
 setup. The resulting docker image will run Apache on 6 different ports with 6
 different PHP versions:
 
-Port | PHP Version | Binary
------|-----------------------
-8052 | 5.2.17      | php-5.2
-8053 | 5.3.29      | php-5.3
-8054 | 5.4.44      | php-5.4
-8055 | 5.5.32      | php-5.5
-8056 | 5.6.18      | php-5.6
-8070 | 7.0.3       | php-7.0
+    Port | PHP Version | Binary
+    -----|----------------------
+    8052 | 5.2.17      | php-5.2
+    8053 | 5.3.29      | php-5.3
+    8054 | 5.4.44      | php-5.4
+    8055 | 5.5.32      | php-5.5
+    8056 | 5.6.18      | php-5.6
+    8070 | 7.0.3       | php-7.0
 
 Please note that to be able to run those ancient PHP versions this image is still
 using Debian Wheezy as base.
