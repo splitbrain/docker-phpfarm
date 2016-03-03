@@ -15,26 +15,26 @@ RUN apt-get update && \
     apt-get install -y \
     apache2 \
     apache2-mpm-prefork \
-    git \
     build-essential \
-    wget \
-    libxml2-dev \
-    libssl-dev \
-    libsslcommon2-dev \
-    libcurl4-openssl-dev \
-    pkg-config \
     curl \
+    git \
     libapache2-mod-fcgid \
     libbz2-dev \
-    libjpeg-dev \
-    libpng-dev \
+    libcurl4-openssl-dev \
     libfreetype6-dev \
-    libxpm-dev \
-    libmcrypt-dev \
-    libt1-dev \
+    libjpeg-dev \
     libltdl-dev \
+    libmcrypt-dev \
     libmhash-dev \
-    libmysqlclient-dev
+    libmysqlclient-dev \
+    libpng-dev \
+    libsslcommon2-dev \
+    libssl-dev \
+    libt1-dev \
+    libxml2-dev \
+    libxpm-dev \
+    pkg-config \
+    wget
 
 # reconfigure Apache
 RUN rm -rf /var/www/*
