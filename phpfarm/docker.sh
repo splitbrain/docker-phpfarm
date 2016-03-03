@@ -15,8 +15,8 @@ do
     ln -s "/phpfarm/inst/bin/php-$VERSION" "/phpfarm/inst/bin/php-$V"
     ln -s "/phpfarm/inst/bin/php-cgi-$VERSION" "/phpfarm/inst/bin/php-cgi-$V"
 
-    # enable apache config
-    a2ensite php-$V
+    # enable apache config - compatible with wheezy and jessie
+    a2ensite php-$V.conf
 done
 
 # enable rewriting
