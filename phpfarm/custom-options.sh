@@ -16,6 +16,7 @@ configoptions="$configoptions \
     --with-ldap \
     --with-ldap-sasl \
     --with-bz2 \
+    --with-config-file-scan-dir=/var/www/.php \
     --with-curl \
     --with-imap \
     --with-imap-ssl \
