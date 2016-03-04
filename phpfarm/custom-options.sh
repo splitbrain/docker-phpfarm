@@ -29,6 +29,7 @@ configoptions="$configoptions \
     --with-mysqli=/usr/bin/mysql_config \
     --with-openssl \
     --with-pdo-mysql \
+    --with-pdo-pgsql \
     --with-png-dir=/usr/lib \
     --with-pgsql \
     --with-ttf \
