@@ -10,9 +10,9 @@ PHP versions:
     8052 | 5.2.17      | php-5.2 (wheezy only)
     8053 | 5.3.29      | php-5.3
     8054 | 5.4.44      | php-5.4
-    8055 | 5.5.32      | php-5.5
-    8056 | 5.6.18      | php-5.6
-    8070 | 7.0.3       | php-7.0
+    8055 | 5.5.33      | php-5.5
+    8056 | 5.6.19      | php-5.6
+    8070 | 7.0.4       | php-7.0
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.2 you have to use the
@@ -61,16 +61,76 @@ working directory.
 
     docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie php-5.3 --version
 
-Supported PHP modules
----------------------
+Loading custom php.ini settings
+-------------------------------
 
-All versions should support the most basic PHP modules as well as sqlite (or it's PDO
-versions) and libgd. All versions should support pdo\_mysql as well.
+All PHP versions are compile with the config-file-scan-dir pointing to
+``/var/www/.php/``. When mounting your own project as a volume to
+``/var/www/`` you can easily place custom ``.ini`` files in the .php directory
+and the should be automatically be picked up by PHP.
 
-Running the container without a volume will show a phpinfo() on all ports with
-more details on what's available.
+Supported PHP extensions
+------------------------
 
-    docker run --rm -t -i -e APACHE_UID=$UID \
-    -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 -p 8056:8056 -p 8070:8070 \
-    splitbrain/phpfarm:jessie
+Here's a list of the extensions available in each of the PHP versions. It should
+cover all the default extensions plus a few popular ones and xdebug for debugging.
+
+      Extension | PHP 5.2 | PHP 5.3 | PHP 5.4 | PHP 5.5 | PHP 5.6 | PHP 7.0
+    ------------+---------+---------+---------+---------+---------+---------
+         bcmath |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            bz2 |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       calendar |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       cgi-fcgi |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          ctype |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           curl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           date |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            dom |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           ereg |         |    ✓    |    ✓    |    ✓    |    ✓    |
+           exif |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       fileinfo |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         filter |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            ftp |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+             gd |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        gettext |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           hash |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          iconv |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           imap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           intl |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           json |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           ldap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         libxml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       mbstring |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         mcrypt |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          mhash |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |
+          mysql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |
+         mysqli |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        mysqlnd |         |         |    ✓    |    ✓    |    ✓    |    ✓
+        openssl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          pcntl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           pcre |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            pdo |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      pdo_mysql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      pdo_pgsql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+     pdo_sqlite |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          pgsql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           phar |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          posix |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+     reflection |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        session |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      simplexml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           soap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        sockets |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            spl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         sqlite |    ✓    |    ✓    |         |         |         |
+        sqlite3 |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       standard |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      tokenizer |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           wddx |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         xdebug |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            xml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      xmlreader |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      xmlwriter |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            xsl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            zip |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           zlib |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 
