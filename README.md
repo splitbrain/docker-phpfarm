@@ -3,16 +3,17 @@ phpfarm for docker
 
 This is a build file to create a [phpfarm](http://sourceforge.net/projects/phpfarm/)
 setup. The resulting docker image will run Apache on different ports with different
-PHP versions:
+PHP versions accessed via FCGI. The different PHP CLI binaries are accesseble as
+well.
 
-    Port | PHP Version | Binary
-    -----|----------------------
-    8052 | 5.2.17      | php-5.2 (wheezy only)
-    8053 | 5.3.29      | php-5.3
-    8054 | 5.4.44      | php-5.4
-    8055 | 5.5.33      | php-5.5
-    8056 | 5.6.19      | php-5.6
-    8070 | 7.0.4       | php-7.0
+     Port | PHP Version | Binary
+    ------+-------------+-----------------------
+     8052 | 5.2.17      | php-5.2 (wheezy only)
+     8053 | 5.3.29      | php-5.3
+     8054 | 5.4.44      | php-5.4
+     8055 | 5.5.33      | php-5.5
+     8056 | 5.6.19      | php-5.6
+     8070 | 7.0.4       | php-7.0
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.2 you have to use the
@@ -26,9 +27,9 @@ After checkout, simply run the following command:
     docker build -t splitbrain/phpfarm:jessie -f Dockerfile-Jessie .
     docker build -t splitbrain/phpfarm:wheezy -f Dockerfile-Wheezy .
 
-This will setup a base Debian system, install phpfarm, download and compile the four
-PHP versions and setup Apache. So, yes this will take a while. See the next section
-for a faster alternative.
+This will setup a Debian base system, install phpfarm, download and compile the four
+PHP versions, xdebug and setup Apache. So, yes this will take a while. See the next
+section for a faster alternative.
 
 Downloading the image
 -----------------
@@ -44,7 +45,7 @@ Running the container
 
 The following will run the container and map all ports to their respective ports on the
 local machine. The current working directory will be used as the document root for
-the Apache server and the server it self will run with the same user id as your current
+the Apache server and the server itself will run with the same user id as your current
 user.
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
@@ -52,11 +53,10 @@ user.
     splitbrain/phpfarm:jessie
 
 Above command will also remove the container again when the process is aborted with
-CTRL-C. While running the Apache and PHP error log is shown on STDOUT.
-
+CTRL-C. While running, the Apache and PHP error log is shown on STDOUT.
 
 You can also access the PHP binaries within the container directly. Refer to the table
-above for the correct names. The follwoing command will run PHP 5.3 on your current
+above for the correct names. The following command will run PHP 5.3 on your current
 working directory.
 
     docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie php-5.3 --version
@@ -64,10 +64,48 @@ working directory.
 Loading custom php.ini settings
 -------------------------------
 
-All PHP versions are compile with the config-file-scan-dir pointing to
+All PHP versions are compiled with the config-file-scan-dir pointing to
 ``/var/www/.php/``. When mounting your own project as a volume to
-``/var/www/`` you can easily place custom ``.ini`` files in the .php directory
-and the should be automatically be picked up by PHP.
+``/var/www/`` you can easily place custom ``.ini`` files in your project's ``.php``
+directory and they should be automatically be picked up by PHP.
+
+Using the image for Testing in Gitlab-CI
+----------------------------------------
+
+[Gitlab-CI](https://about.gitlab.com/gitlab-ci/) users can use this image to automate
+testing against different PHP versions. For detailled info refer to the gitlab-ci
+documentation.
+
+Here's a simple ``.gitlab-ci.yml`` example using phpunit.
+
+    stages:
+      - test
+
+    image: splitbrain/phpfarm:jessie
+
+    php-5.3:
+      stage: test
+      script:
+        - wget https://phar.phpunit.de/phpunit-old.phar -O phpunit
+        - php-5.3 phpunit --coverage-text --colors=never
+
+    php-5.4:
+      stage: test
+      script:
+        - wget https://phar.phpunit.de/phpunit-old.phar -O phpunit
+        - php-5.4 phpunit --coverage-text --colors=never
+
+    php-5.6:
+      stage: test
+      script:
+        - wget https://phar.phpunit.de/phpunit.phar -O phpunit
+        - php-5.6 phpunit --coverage-text --colors=never
+
+    php-7.0:
+      stage: test
+      script:
+        - wget https://phar.phpunit.de/phpunit.phar -O phpunit
+        - php-7.0 phpunit --coverage-text --colors=never
 
 Supported PHP extensions
 ------------------------
