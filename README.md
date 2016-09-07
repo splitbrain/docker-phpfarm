@@ -11,13 +11,14 @@ well.
      8052 | 5.2.17      | php-5.2 (wheezy only)
      8053 | 5.3.29      | php-5.3
      8054 | 5.4.44      | php-5.4
-     8055 | 5.5.33      | php-5.5
-     8056 | 5.6.19      | php-5.6
-     8070 | 7.0.4       | php-7.0
+     8055 | 5.5.38      | php-5.5
+     8056 | 5.6.25      | php-5.6
+     8070 | 7.0.10      | php-7.0
+     8071 | 7.1.0RC1    | php-7.1
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.2 you have to use the
-``wheezy`` tag, otherwise the ``jessie`` provides a more modern environment.
+``wheezy`` tag, otherwise the ``jessie`` image provides a more modern environment.
 
 Building the image
 ------------------
@@ -27,8 +28,8 @@ After checkout, simply run the following command:
     docker build -t splitbrain/phpfarm:jessie -f Dockerfile-Jessie .
     docker build -t splitbrain/phpfarm:wheezy -f Dockerfile-Wheezy .
 
-This will setup a Debian base system, install phpfarm, download and compile the four
-PHP versions, xdebug and setup Apache. So, yes this will take a while. See the next
+This will setup a Debian base system, install phpfarm, download and compile the different
+PHP versions, extensions and setup Apache. So, yes this will take a while. See the next
 section for a faster alternative.
 
 Downloading the image
@@ -50,7 +51,7 @@ user.
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
     -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 -p 8056:8056 -p 8070:8070 \
-    splitbrain/phpfarm:jessie
+    -p 8071:8071 splitbrain/phpfarm:jessie
 
 Above command will also remove the container again when the process is aborted with
 CTRL-C. While running, the Apache and PHP error log is shown on STDOUT.
@@ -113,62 +114,62 @@ Supported PHP extensions
 Here's a list of the extensions available in each of the PHP versions. It should
 cover all the default extensions plus a few popular ones and xdebug for debugging.
 
-      Extension | PHP 5.2 | PHP 5.3 | PHP 5.4 | PHP 5.5 | PHP 5.6 | PHP 7.0
-    ------------+---------+---------+---------+---------+---------+---------
-         bcmath |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            bz2 |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-       calendar |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-       cgi-fcgi |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-          ctype |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           curl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           date |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            dom |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           ereg |         |    ✓    |    ✓    |    ✓    |    ✓    |
-           exif |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-       fileinfo |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-         filter |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            ftp |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-             gd |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-        gettext |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           hash |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-          iconv |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           imap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           intl |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           json |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           ldap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-         libxml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-       mbstring |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-         mcrypt |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-          mhash |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |
-          mysql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |
-         mysqli |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-        mysqlnd |         |         |    ✓    |    ✓    |    ✓    |    ✓
-        openssl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-          pcntl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           pcre |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            pdo |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-      pdo_mysql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-      pdo_pgsql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-     pdo_sqlite |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-          pgsql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           phar |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-          posix |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-     reflection |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-        session |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-      simplexml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           soap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-        sockets |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            spl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-         sqlite |    ✓    |    ✓    |         |         |         |
-        sqlite3 |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-       standard |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-      tokenizer |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           wddx |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-         xdebug |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            xml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-      xmlreader |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-      xmlwriter |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            xsl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-            zip |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-           zlib |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      Extension | PHP 5.2 | PHP 5.3 | PHP 5.4 | PHP 5.5 | PHP 5.6 | PHP 7.0 | PHP 7.1
+    ------------+---------+---------+---------+---------+---------+---------+---------
+         bcmath |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            bz2 |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       calendar |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       cgi-fcgi |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          ctype |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           curl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           date |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            dom |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           ereg |         |    ✓    |    ✓    |    ✓    |    ✓    |         |
+           exif |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       fileinfo |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         filter |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            ftp |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+             gd |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        gettext |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           hash |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          iconv |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           imap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           intl |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           json |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           ldap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         libxml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       mbstring |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         mcrypt |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          mhash |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |         |
+          mysql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |         |
+         mysqli |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        mysqlnd |         |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        openssl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          pcntl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           pcre |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            pdo |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      pdo_mysql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      pdo_pgsql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+     pdo_sqlite |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          pgsql |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           phar |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+          posix |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+     reflection |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        session |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      simplexml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           soap |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+        sockets |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            spl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         sqlite |    ✓    |    ✓    |         |         |         |         |
+        sqlite3 |         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+       standard |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      tokenizer |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           wddx |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+         xdebug |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            xml |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      xmlreader |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+      xmlwriter |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            xsl |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+            zip |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
+           zlib |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 

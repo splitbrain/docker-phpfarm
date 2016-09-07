@@ -2,7 +2,7 @@
 /**
  * This builds the table of supported PHP extensions
  */
-$ports=array(8052,8053,8054,8055,8056,8070);
+$ports=array(8052,8053,8054,8055,8056,8070,8071);
 
 # fetch extension info
 $allmods = array();
