@@ -3,7 +3,7 @@ phpfarm for docker
 
 This is a build file to create a [phpfarm](http://sourceforge.net/projects/phpfarm/)
 setup. The resulting docker image will run Apache on different ports with different
-PHP versions accessed via FCGI. The different PHP CLI binaries are accesseble as
+PHP versions accessed via FCGI. The different PHP CLI binaries are accessible as
 well.
 
      Port | PHP Version | Binary
@@ -61,6 +61,11 @@ above for the correct names. The following command will run PHP 5.3 on your curr
 working directory.
 
     docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie php-5.3 --version
+
+Alternatively you can also run an interactive shell inside the container with
+your current working directory mounted.
+
+    docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie /bin/bash
 
 Loading custom php.ini settings
 -------------------------------

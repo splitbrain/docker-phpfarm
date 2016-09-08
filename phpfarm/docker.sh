@@ -21,12 +21,14 @@ do
 
     # compile xdebug
     if [ "$V" == "5.2" ] || [ "$V" == "5.3" ]; then
-        XDBGVERSION="2.2.7"
+        XDBGVERSION="XDEBUG_2_2_7" # old release for old PHP versions
+    elif [[ $VERSION == *"RC"* ]]; then
+        XDBGVERSION="master"       # master for RCs
     else
-        XDBGVERSION="2.4.0"
+        XDBGVERSION="XDEBUG_2_4_1" # stable release for all others
     fi
-    wget https://xdebug.org/files/xdebug-$XDBGVERSION.tgz && \
-    tar -xzvf xdebug-$XDBGVERSION.tgz && \
+    wget https://github.com/xdebug/xdebug/archive/$XDBGVERSION.tar.gz && \
+    tar -xzvf $XDBGVERSION.tar.gz && \
     cd xdebug-$XDBGVERSION && \
     phpize-$V && \
     ./configure --enable-xdebug --with-php-config=/phpfarm/inst/bin/php-config-$V && \
@@ -36,7 +38,7 @@ do
     echo "zend_extension = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/lib/php.ini && \
     cd .. && \
     rm -rf xdebug-$XDBGVERSION && \
-    rm -f xdebug-$XDBGVERSION.tgz
+    rm -f $XDBGVERSION.tar.gz
 
     # enable apache config - compatible with wheezy and jessie
     a2ensite php-$V.conf
