@@ -12,9 +12,9 @@ well.
      8053 | 5.3.29      | php-5.3
      8054 | 5.4.44      | php-5.4
      8055 | 5.5.38      | php-5.5
-     8056 | 5.6.25      | php-5.6
-     8070 | 7.0.10      | php-7.0
-     8071 | 7.1.0RC1    | php-7.1
+     8056 | 5.6.29      | php-5.6
+     8070 | 7.0.14      | php-7.0
+     8071 | 7.1.0       | php-7.1
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.2 you have to use the
