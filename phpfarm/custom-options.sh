@@ -13,6 +13,7 @@ configoptions="$configoptions \
     --enable-fastcgi \
     --enable-gd-native-ttf \
     --enable-intl \
+    --enable-opcache \
     --with-ldap \
     --with-ldap-sasl \
     --with-bz2 \
