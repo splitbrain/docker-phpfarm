@@ -58,7 +58,7 @@ COPY var-www /var/www/
 COPY apache  /etc/apache2/
 
 # install the phpfarm script
-RUN git clone https://github.com/cweiske/phpfarm.git phpfarm
+RUN git clone https://github.com/fpoirotte/phpfarm.git phpfarm
 
 # add customized configuration
 COPY phpfarm /phpfarm/src/

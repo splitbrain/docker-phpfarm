@@ -10,7 +10,6 @@ fi
 
 
 configoptions="$configoptions \
-    --enable-fastcgi \
     --enable-gd-native-ttf \
     --enable-intl \
     --with-ldap \
@@ -33,8 +32,9 @@ configoptions="$configoptions \
     --with-pdo-pgsql \
     --with-png-dir=/usr/lib \
     --with-pgsql \
-    --with-ttf \
     --with-xsl=/usr \
 "
 
+echo "--- loaded custom/options.sh ----------"
 echo $configoptions
+echo "---------------------------------------"

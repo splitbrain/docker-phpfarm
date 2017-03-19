@@ -9,6 +9,10 @@ fi
 # build and symlink to major.minor
 for VERSION in $PHP_FARM_VERSIONS
 do
+    cd /phpfarm/src # make absolutely sure we're in the correct directory
+
+    echo "--- compiling version $VERSION -----------------------------------------"
+
     V=$(echo $VERSION | awk -F. '{print $1"."$2}')
 
     # compile the PHP version
@@ -22,11 +26,16 @@ do
     # compile xdebug
     if [ "$V" == "5.2" ] || [ "$V" == "5.3" ]; then
         XDBGVERSION="XDEBUG_2_2_7" # old release for old PHP versions
+    elif [ "$V" == "5.4" ]; then
+        XDBGVERSION="XDEBUG_2_4_1" # old release for old PHP versions
     elif [[ $VERSION == *"RC"* ]]; then
         XDBGVERSION="master"       # master for RCs
     else
-        XDBGVERSION="XDEBUG_2_4_1" # stable release for all others
+        XDBGVERSION="XDEBUG_2_5_1" # stable release for all others
     fi
+
+    echo "--- compiling xdebug $XDBGVERSION for php $VERSION ---------------------"
+
     wget https://github.com/xdebug/xdebug/archive/$XDBGVERSION.tar.gz && \
     tar -xzvf $XDBGVERSION.tar.gz && \
     cd xdebug-$XDBGVERSION && \
@@ -34,8 +43,8 @@ do
     ./configure --enable-xdebug --with-php-config=/phpfarm/inst/bin/php-config-$V && \
     make && \
     cp -v modules/xdebug.so /phpfarm/inst/php-$V/lib/ && \
-    echo "zend_extension_debug = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/lib/php.ini && \
-    echo "zend_extension = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/lib/php.ini && \
+    echo "zend_extension_debug = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/etc/php.ini && \
+    echo "zend_extension = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/etc/php.ini && \
     cd .. && \
     rm -rf xdebug-$XDBGVERSION && \
     rm -f $XDBGVERSION.tar.gz
