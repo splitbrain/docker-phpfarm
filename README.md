@@ -1,7 +1,7 @@
 phpfarm for docker
 ==================
 
-This is a build file to create a [phpfarm](http://sourceforge.net/projects/phpfarm/)
+This is a build file to create a [phpfarm](https://github.com/fpoirotte/phpfarm)
 setup. The resulting docker image will run Apache on different ports with different
 PHP versions accessed via FCGI. The different PHP CLI binaries are accessible as
 well.
