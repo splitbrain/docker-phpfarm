@@ -24,7 +24,7 @@ do
     ln -s "/phpfarm/inst/bin/php-config-$VERSION" "/phpfarm/inst/bin/php-config-$V"
 
     # compile xdebug
-    if [ "$V" == "5.2" ] || [ "$V" == "5.3" ]; then
+    if [ "$V" == "5.1" ] || [ "$V" == "5.2" ] || [ "$V" == "5.3" ]; then
         XDBGVERSION="XDEBUG_2_2_7" # old release for old PHP versions
     elif [ "$V" == "5.4" ]; then
         XDBGVERSION="XDEBUG_2_4_1" # old release for old PHP versions

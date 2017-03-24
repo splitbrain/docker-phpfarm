@@ -7,6 +7,7 @@ if [ -z "$TAG" ]; then
 fi
 
 CONTAINER=$( docker run -d -e APACHE_UID=$UID \
+    -p 8051:8051 \
     -p 8052:8052 \
     -p 8053:8053 \
     -p 8054:8054 \
@@ -25,7 +26,7 @@ fi
 
 sleep 5
 
-for port in 8052 8053 8054 8055 8056 8070 8071; do
+for port in 8051 8052 8053 8054 8055 8056 8070 8071; do
     result=$(curl --silent http://localhost:$port/ |grep -Po 'PHP Version \d+.\d+.\d+')
     if [ -z "$result" ]; then
         echo -e "Port $port: \e[31mFAILED\e[0m"
