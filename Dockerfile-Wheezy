@@ -23,6 +23,8 @@ RUN apt-get update && \
     curl \
     debian-archive-keyring \
     debian-keyring \
+    # Flex needed for PHP 5.1 see http://php.net/manual/en/install.unix.php
+    flex \
     git \
     imagemagick \
     lemon \
