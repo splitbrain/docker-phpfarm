@@ -8,6 +8,7 @@ patchDir='/phpfarm/src/custom/patches-5.1.6'
 patch $srcdir $patchDir/curl.patch
 patch $srcdir $patchDir/openssl.patch
 patch $srcdir $patchDir/pdo_oci.patch
+patch $srcdir $patchDir/imap.patch
 
 
 # no intl on 5.1.6

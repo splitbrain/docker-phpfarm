@@ -1,0 +1,11 @@
+--- ext/imap/php_imap.c.orig	2017-03-25 22:32:24.917938314 +0000
++++ ext/imap/php_imap.c	2017-03-25 22:32:53.066626367 +0000
+@@ -75,7 +75,7 @@
+ void rfc822_date(char *date);
+ char *cpystr(const char *str);
+ char *cpytxt(SIZEDTEXT *dst, char *text, unsigned long size);
+-long utf8_mime2text(SIZEDTEXT *src, SIZEDTEXT *dst);
++long utf8_mime2text(SIZEDTEXT *src, SIZEDTEXT *dst, long flags);
+ unsigned long find_rightmost_bit(unsigned long *valptr);
+ void fs_give(void **block);
+ void *fs_get(size_t size);
