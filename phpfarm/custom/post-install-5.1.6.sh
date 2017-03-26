@@ -26,7 +26,7 @@ patch -d $srcdir -p0 < $patchDir/mysqli.patch
 patch -d $srcdir -p0 < $patchDir/mysqli-2.patch
 
 # Compile MySQLi extension using workaround, as compiling PHP using
-# --with-mysqli breaks.
+# --with-mysqli breaks. See http://gunner.me/archives/403
 cd $srcDir/ext/mysqli
 $binDir/phpize
 ./configure --with-php-config=$binDir/php-config --with-mysqli=/usr/bin/mysql_config
