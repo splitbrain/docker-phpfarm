@@ -22,8 +22,8 @@ ln -fs $binDir/php-config /phpfarm/inst/bin/php-config-5.1.6
 ln -fs $binDir/phpize /phpfarm/inst/bin/phpize-5.1.6
 
 # Patch extension source before compiling.
-patch -d $srcdir -p0 < $patchDir/mysqli.patch
-patch -d $srcdir -p0 < $patchDir/mysqli-2.patch
+patch -d $srcDir -p0 < $patchDir/mysqli.patch
+patch -d $srcDir -p0 < $patchDir/mysqli-2.patch
 
 # Compile MySQLi extension using workaround, as compiling PHP using
 # --with-mysqli breaks. See http://gunner.me/archives/403
