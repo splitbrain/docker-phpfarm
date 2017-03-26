@@ -22,6 +22,9 @@ configoptions=`echo "$configoptions" |sed 's/--enable-intl//'`
 configoptions=`echo "$configoptions" |sed 's/--with-openssl//'`
 configoptions=`echo "$configoptions" |sed 's/--with-mysqli//'`
 
+# Required to build FastCGI interpreter.
+configoptions="$configoptions --enable-fastcgi"
+
 
 echo "--- loaded custom/options-5.1.6.sh ---"
 echo $configoptions
