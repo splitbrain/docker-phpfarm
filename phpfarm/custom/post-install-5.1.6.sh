@@ -54,6 +54,8 @@ patch -d $srcDir -p0 < $patchDir/openssl.patch
 # Compile extension as a workaround, as compiling PHP using
 # --with-openssl breaks.
 cd $srcDir/ext/openssl
+# PHPize needs config.m4 to start.
+cp config0.m4 config.m4
 $binDir/phpize
 ./configure --with-php-config=$binDir/php-config --with-openssl
 make
