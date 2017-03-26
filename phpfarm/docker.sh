@@ -18,7 +18,8 @@ do
     # compile the PHP version
     ./compile.sh $VERSION
 
-    # PHP 5.1 names executables differently, move them to correct dirs.
+    # PHP 5.1 names both CLI and CGI executables 'php'. Rename and move them to
+    # correct dirs. See http://php.net/manual/bg/features.commandline.php
     if [ "$V" == "5.1" ]; then
         post='custom/post-install-5.1.6.sh'
         echo "Running commands from '$post'"
