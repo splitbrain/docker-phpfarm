@@ -41,7 +41,7 @@ make
 cp modules/mysqli.so /phpfarm/inst/php-5.1.6/lib/
 
 # Load extension in php.ini.
-echo 'zend_extension = /phpfarm/inst/php-5.1.6/lib/mysqli.so' >> /phpfarm/inst/php-5.1.6/lib/php.ini
+echo 'zend_extension = /phpfarm/inst/php-5.1.6/lib/mysqli.so' >> /phpfarm/inst/php-5.1.6/etc/php.ini
 
 
 #
@@ -64,5 +64,5 @@ make
 cp modules/openssl.so /phpfarm/inst/php-5.1.6/lib/
 
 # Load extension in php.ini.
-echo 'extension = /phpfarm/inst/php-5.1.6/lib/openssl.so' >> /phpfarm/inst/php-5.1.6/lib/php.ini
+echo 'extension = /phpfarm/inst/php-5.1.6/lib/openssl.so' >> /phpfarm/inst/php-5.1.6/etc/php.ini
 
