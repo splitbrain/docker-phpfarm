@@ -21,6 +21,11 @@ ln -fs $binDir/php-cgi /phpfarm/inst/bin/php-cgi-5.1.6
 ln -fs $binDir/php-config /phpfarm/inst/bin/php-config-5.1.6
 ln -fs $binDir/phpize /phpfarm/inst/bin/phpize-5.1.6
 
+
+#
+# MySQLi extension.
+#
+
 # Patch extension source before compiling.
 patch -d $srcDir -p0 < $patchDir/mysqli.patch
 patch -d $srcDir -p0 < $patchDir/mysqli-2.patch
@@ -37,4 +42,25 @@ cp modules/mysqli.so /phpfarm/inst/php-5.1.6/lib/
 
 # Load extension in php.ini.
 echo 'zend_extension = /phpfarm/inst/php-5.1.6/lib/mysqli.so' >> /phpfarm/inst/php-5.1.6/lib/php.ini
+
+
+#
+# OpenSSL extension.
+#
+
+# Patch extension source before compiling.
+patch -d $srcDir -p0 < $patchDir/openssl.patch
+
+# Compile extension as a workaround, as compiling PHP using
+# --with-openssl breaks.
+cd $srcDir/ext/openssl
+$binDir/phpize
+./configure --with-php-config=$binDir/php-config --with-openssl
+make
+
+# Move compiled extension to extension dir.
+cp modules/openssl.so /phpfarm/inst/php-5.1.6/lib/
+
+# Load extension in php.ini.
+echo 'extension = /phpfarm/inst/php-5.1.6/lib/openssl.so' >> /phpfarm/inst/php-5.1.6/lib/php.ini
 
