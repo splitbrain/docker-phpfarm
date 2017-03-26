@@ -20,7 +20,8 @@ configoptions=`echo "$configoptions" |sed 's/--enable-intl//'`
 # incompatibilities with existing libraries - leave them out.
 # MySQLi extension can be compiled later using PHPize, see http://gunner.me/archives/403
 configoptions=`echo "$configoptions" |sed 's/--with-openssl//'`
-configoptions=`echo "$configoptions" |sed 's/--with-mysqli//'`
+# Remove '--with-mysqli=/path/to/config'
+configoptions=`echo "$configoptions" |sed 's/--with-mysqli\(=[^ ]\+\)\?//'`
 
 # Required to build FastCGI interpreter.
 configoptions="$configoptions --enable-fastcgi"
