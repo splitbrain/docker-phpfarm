@@ -8,6 +8,10 @@ srcDir='/phpfarm/src/php-5.1.6'
 # PHP 5.1.6 binary executables.
 binDir='/phpfarm/inst/php-5.1.6/bin'
 
+# Patches for PHP source code.
+patchDir='/phpfarm/src/custom/patches-5.1.6'
+
+
 # Move the executables to the correct places.
 cp $srcDir/sapi/cgi/php /phpfarm/inst/php-5.1.6/bin/php-cgi
 cp $srcDir/sapi/cli/php /phpfarm/inst/php-5.1.6/bin/php
@@ -16,6 +20,10 @@ cp $srcDir/sapi/cli/php /phpfarm/inst/php-5.1.6/bin/php
 ln -fs $binDir/php-cgi /phpfarm/inst/bin/php-cgi-5.1.6
 ln -fs $binDir/php-config /phpfarm/inst/bin/php-config-5.1.6
 ln -fs $binDir/phpize /phpfarm/inst/bin/phpize-5.1.6
+
+# Patch extension source before compiling.
+patch -d $srcdir -p0 < $patchDir/mysqli.patch
+patch -d $srcdir -p0 < $patchDir/mysqli-2.patch
 
 # Compile MySQLi extension using workaround, as compiling PHP using
 # --with-mysqli breaks.
