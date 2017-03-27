@@ -6,16 +6,16 @@ setup. The resulting docker image will run Apache on different ports with differ
 PHP versions accessed via FCGI. The different PHP CLI binaries are accessible as
 well.
 
-     Port | PHP Version | Binary
-    ------+-------------+-----------------------
-     8051 | 5.1.6       | php-5.1 (wheezy only)
-     8052 | 5.2.17      | php-5.2 (wheezy only)
-     8053 | 5.3.29      | php-5.3
-     8054 | 5.4.44      | php-5.4
-     8055 | 5.5.38      | php-5.5
-     8056 | 5.6.30      | php-5.6
-     8070 | 7.0.17      | php-7.0
-     8071 | 7.1.3       | php-7.1
+Port | PHP Version | Binary
+-----|-------------|-----------------------
+8051 | 5.1.6       | php-5.1 (wheezy only)
+8052 | 5.2.17      | php-5.2 (wheezy only)
+8053 | 5.3.29      | php-5.3
+8054 | 5.4.44      | php-5.4
+8055 | 5.5.38      | php-5.5
+8056 | 5.6.30      | php-5.6
+8070 | 7.0.17      | php-7.0
+8071 | 7.1.3       | php-7.1
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.1 or 5.2 you have to
