@@ -8,6 +8,7 @@ well.
 
      Port | PHP Version | Binary
     ------+-------------+-----------------------
+     8051 | 5.1.6       | php-5.1 (wheezy only)
      8052 | 5.2.17      | php-5.2 (wheezy only)
      8053 | 5.3.29      | php-5.3
      8054 | 5.4.44      | php-5.4
@@ -17,8 +18,9 @@ well.
      8071 | 7.1.3       | php-7.1
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
-underlying Debian base system releases. If you need PHP 5.2 you have to use the
-``wheezy`` tag, otherwise the ``jessie`` image provides a more modern environment.
+underlying Debian base system releases. If you need PHP 5.1 or 5.2 you have to
+use the ``wheezy`` tag, otherwise the ``jessie`` image provides a more modern
+environment.
 
 Building the image
 ------------------
@@ -50,8 +52,8 @@ the Apache server and the server itself will run with the same user id as your c
 user.
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
-    -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 -p 8056:8056 -p 8070:8070 \
-    -p 8071:8071 splitbrain/phpfarm:jessie
+    -p 8051:8051 -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 \
+    -p 8056:8056 -p 8070:8070 -p 8071:8071 splitbrain/phpfarm:jessie
 
 Above command will also remove the container again when the process is aborted with
 CTRL-C. While running, the Apache and PHP error log is shown on STDOUT.
