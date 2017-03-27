@@ -11,8 +11,15 @@ if(isset($_GET['modules'])) {
     if ($zend_mods) {
         $mods = array_merge($mods, $zend_mods);
     }
+
     $mods = array_map('strtolower', $mods);
+
+    // Remove duplicates.
+    $mods = array_unique($mods);
+
+    // Sort alphabetically.
     sort($mods);
+
     echo join("\n", $mods);
 } else {
     phpinfo();
