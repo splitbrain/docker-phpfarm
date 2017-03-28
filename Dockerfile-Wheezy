@@ -20,6 +20,8 @@ RUN apt-get update && \
     apache2-mpm-prefork \
     autoconf \
     build-essential \
+    # git-clone: Fix 'fatal: unable to access https://github.com/...: Problem with the SSL CA cert (path? access rights?)'
+    ca-certificates \
     curl \
     debian-archive-keyring \
     debian-keyring \
