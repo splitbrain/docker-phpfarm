@@ -1,0 +1,18 @@
+--- ext/mysqli/mysqli.c
++++ ext/mysqli/mysqli.c
+@@ -561,6 +561,15 @@
+ 
+ 
+ 	/* replication */
++	/*
++	There are three types of queries - the ones that have to go to
++	the master, the ones that go to a slave, and the adminstrative
++	type which must happen on the pivot connectioin
++	*/
++	enum mysql_rpl_type
++	{
++		MYSQL_RPL_MASTER, MYSQL_RPL_SLAVE, MYSQL_RPL_ADMIN
++	};
+ 	REGISTER_LONG_CONSTANT("MYSQLI_RPL_MASTER", MYSQL_RPL_MASTER, CONST_CS | CONST_PERSISTENT);
+ 	REGISTER_LONG_CONSTANT("MYSQLI_RPL_SLAVE", MYSQL_RPL_SLAVE, CONST_CS | CONST_PERSISTENT);
+ 	REGISTER_LONG_CONSTANT("MYSQLI_RPL_ADMIN", MYSQL_RPL_ADMIN, CONST_CS | CONST_PERSISTENT);

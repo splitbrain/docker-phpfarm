@@ -69,7 +69,7 @@ ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
 RUN cd /phpfarm/src && ./docker.sh
 
 # expose the ports
-EXPOSE 8052 8053 8054 8055 8056 8070 8071
+EXPOSE 8053 8054 8055 8056 8070 8071
 
 # run it
 WORKDIR /var/www
