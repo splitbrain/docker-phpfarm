@@ -17,15 +17,6 @@ do
 
     # compile the PHP version
     ./compile.sh $VERSION
-
-    # PHP 5.1 names both CLI and CGI executables 'php'. Rename and move them to
-    # correct dirs. See http://php.net/manual/bg/features.commandline.php
-    if [ "$V" == "5.1" ]; then
-        post='custom/post-install-5.1.6.sh'
-        echo "Running commands from '$post'"
-        /bin/bash "$post" "$VERSION"
-    fi
-
     ln -s "/phpfarm/inst/php-$VERSION/" "/phpfarm/inst/php-$V"
     ln -s "/phpfarm/inst/bin/php-$VERSION" "/phpfarm/inst/bin/php-$V"
     ln -s "/phpfarm/inst/bin/php-cgi-$VERSION" "/phpfarm/inst/bin/php-cgi-$V"
@@ -69,6 +60,6 @@ ls -l /phpfarm/inst/bin/
 a2enmod rewrite
 
 # clean up sources
-#rm -rf /phpfarm/src
-#apt-get clean
-#rm -rf /var/lib/apt/lists/*
+rm -rf /phpfarm/src
+apt-get clean
+rm -rf /var/lib/apt/lists/*
