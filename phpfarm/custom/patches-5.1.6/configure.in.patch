@@ -1,0 +1,11 @@
+--- configure.in
++++ configure.in
+@@ -1253,7 +1253,7 @@
+ 
+ case $PHP_SAPI in
+   cgi)
+-    install_targets="install-sapi $install_targets $PHP_INSTALL_CLI_TARGET"
++    install_targets="install-sapi $install_targets"
+     ;;
+   cli)
+     install_targets="$PHP_INSTALL_CLI_TARGET $install_targets"
