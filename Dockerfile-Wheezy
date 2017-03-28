@@ -55,6 +55,7 @@ RUN apt-get update && \
     pkg-config \
     vim \
     wget && \
+    \
     # Clean up apt package lists.
     rm -rf /var/lib/apt/lists/*
 
