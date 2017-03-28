@@ -5,13 +5,23 @@
 
 patchDir='/phpfarm/src/custom/patches-5.1.6'
 
-patch -d $srcdir -p0 < $patchDir/curl.patch
-# patch -d $srcdir -p0 < $patchDir/openssl.patch
-patch -d $srcdir -p0 < $patchDir/pdo_oci.patch
-patch -d $srcdir -p0 < $patchDir/imap.patch
-# patch -d $srcdir -p0 < $patchDir/mysqli.patch
-# patch -d $srcdir -p0 < $patchDir/mysqli-2.patch
+# Patch extensions.
+patch -b -d $srcdir -p0 < $patchDir/curl.patch
+patch -b -d $srcdir -p0 < $patchDir/pdo_oci.patch
+patch -b -d $srcdir -p0 < $patchDir/imap.patch
 
+# Both CGI and CLI compile to 'php' which is incompatible with future versions.
+# See: http://php.net/manual/en/features.commandline.introduction.php
+# Patch CGI to make it build to 'php-cgi' instead of 'php'.
+patch -b -d $srcdir -p0 < $patchDir/cgi.patch
+
+# Another patch for CGI compile. And ensure that CLI is also compiled.
+# Otherwise will result in 'no php found' error in compile.sh.
+patch -b -d $srcdir -p0 < $patchDir/configure.patch
+
+# Not needed for compile as they are only Autoconf template files and tests.
+# patch -b -d $srcdir -p0 < $patchDir/configure.in.patch
+# patch -b -d $srcdir -p0 < $patchDir/run-tests.patch
 
 # no intl on 5.1.6
 configoptions=`echo "$configoptions" |sed 's/--enable-intl//'`
