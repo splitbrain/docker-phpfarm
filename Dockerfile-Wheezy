@@ -15,7 +15,7 @@ ENV LDFLAGS "-lssl -lcrypto -lstdc++"
 
 # add some build tools
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
     apache2 \
     apache2-mpm-prefork \
     autoconf \
@@ -52,7 +52,9 @@ RUN apt-get update && \
     libxslt1-dev \
     pkg-config \
     vim \
-    wget
+    wget && \
+    # Clean up apt package lists.
+    rm -rf /var/lib/apt/lists/*
 
 # reconfigure Apache
 RUN rm -rf /var/www/*
