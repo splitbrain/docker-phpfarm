@@ -14,10 +14,8 @@ ENV \
     ca-certificates \
     debian-keyring \
     git \
-    vim \
     wget \
   " \
-  \
   # Packages only needed for PHP build.
   BUILD_PKGS=" \
     autoconf \
@@ -27,7 +25,6 @@ ENV \
     lemon \
     pkg-config \
   " \
-  \
   # PHP runtime dependencies.
   RUNTIME_PKGS=" \
     curl \
@@ -56,7 +53,6 @@ ENV \
     libxpm-dev \
     libxslt1-dev \
   " \
-  \
   # Packages needed to run Apache httpd.
   APACHE_PKGS="\
     apache2 \
