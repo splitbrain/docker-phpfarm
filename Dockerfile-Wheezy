@@ -5,7 +5,7 @@
 # we use Debian as the host OS
 FROM philcryer/min-wheezy:latest
 
-MAINTAINER Andreas Gohr, andi@splitbrain.org
+LABEL maintainer "Andreas Gohr <andi@splitbrain.org>, Eugene Sia <eugene@eugenesia.co.uk>"
 
 ENV \
   # Packages needed for running various build scripts.
