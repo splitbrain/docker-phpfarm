@@ -47,8 +47,6 @@ ENV \
     libpq-dev \
     libsasl2-dev \
     libssl-dev \
-    libsslcommon2-dev \
-    libt1-dev \
     libwebp-dev \
     libxml2-dev \
     libxpm-dev \
