@@ -19,7 +19,6 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
     build-essential \
     # Flex needed for PHP 5.1 see http://php.net/manual/en/install.unix.php
     flex \
-    libapache2-mod-fcgid \
     libbz2-dev \
     libc-client2007e-dev \
     libcurl4-openssl-dev \
@@ -56,6 +55,8 @@ RUN apt-get update && \
     git \
     imagemagick \
     lemon \
+    # Fcgid mod for Apache - not a build dependency library.
+    libapache2-mod-fcgid \
     pkg-config \
     vim \
     wget && \
