@@ -14,12 +14,19 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
   LDFLAGS="-lssl -lcrypto -lstdc++" \
   \
   # Packages only needed for PHP build.
-  BUILD_DEPS="\
+  BUILD_PKGS="\
     autoconf \
     build-essential \
     # Flex needed for PHP 5.1 see http://php.net/manual/en/install.unix.php
     flex \
     lemon \
+    pkg-config \
+  " \
+  \
+  # PHP runtime dependencies.
+  RUNTIME_PKGS="\
+    curl \
+    imagemagick \
     libbz2-dev \
     libc-client2007e-dev \
     libcurl4-openssl-dev \
@@ -41,16 +48,10 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
     libxml2-dev \
     libxpm-dev \
     libxslt1-dev \
-    pkg-config \
   " \
-  # PHP runtime dependencies.
-  RUNTIME_DEPS="\
-    curl \
-    imagemagick \
-    libpq-dev \
-    libxslt1-dev \
-  " \
-  APACHE_DEPS="\
+  \
+  # Packages needed to run Apache httpd.
+  APACHE_PKGS="\
     apache2 \
     apache2-mpm-prefork \
     # Fcgid mod for Apache - not a build dependency library.
@@ -60,8 +61,8 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
 # Install packages we need for runtime usage.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    $RUNTIME_DEPS \
-    $APACHE_DEPS \
+    $RUNTIME_PKGS \
+    $APACHE_PKGS \
     \
     # Other packages for convenience.
     # git-clone: Fix 'fatal: unable to access https://github.com/...: Problem with the SSL CA cert (path? access rights?)'
@@ -91,14 +92,14 @@ ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Install packages needed for build.
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends $BUILD_DEPS && \
+  apt-get install -y --no-install-recommends $BUILD_PKGS && \
   \
   # Build all PHP versions.
   cd /phpfarm/src && \
   ./docker.sh && \
   \
   # Clean up.
-  apt-get purge -y $BUILD_DEPS && \
+  apt-get purge -y $BUILD_PKGS && \
   apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/*
 
@@ -109,3 +110,4 @@ EXPOSE 8051 8052 8053 8054 8055 8056 8070 8071
 WORKDIR /var/www
 COPY run.sh /run.sh
 CMD ["/bin/bash", "/run.sh"]
+
