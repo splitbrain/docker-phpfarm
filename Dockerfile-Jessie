@@ -5,30 +5,32 @@
 # we use Debian as the host OS
 FROM philcryer/min-jessie:latest
 
-MAINTAINER Andreas Gohr, andi@splitbrain.org
+LABEL maintainer "Andreas Gohr <andi@splitbrain.org>, Eugene Sia <eugene@eugenesia.co.uk>"
 
-# the PHP versions to compile
-ENV PHP_FARM_VERSIONS "5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3"
-
-# make php 5.3 work again
-ENV LDFLAGS "-lssl -lcrypto -lstdc++"
-
-# add some build tools
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    apache2 \
-    apache2-mpm-prefork \
-    autoconf \
-    build-essential \
+ENV \
+  # Packages needed for running various build scripts.
+  SCRIPT_PKGS=" \
     # git-clone: Fix 'fatal: unable to access https://github.com/...: Problem with the SSL CA cert (path? access rights?)'
     ca-certificates \
-    curl \
-    debian-archive-keyring \
     debian-keyring \
     git \
-    imagemagick \
+    wget \
+  " \
+  # Packages only needed for PHP build.
+  BUILD_PKGS=" \
+    autoconf \
+    build-essential \
+    # Flex needed for PHP 5.1 & 5.2 see http://php.net/manual/en/install.unix.php
+    flex \
     lemon \
-    libapache2-mod-fcgid \
+    pkg-config \
+  " \
+  # PHP runtime dependencies.
+  RUNTIME_PKGS=" \
+    curl \
+    # apt-get complains that this is an 'essential' package.
+    debian-archive-keyring \
+    imagemagick \
     libbz2-dev \
     libc-client2007e-dev \
     libcurl4-openssl-dev \
@@ -45,13 +47,26 @@ RUN apt-get update && \
     libpq-dev \
     libsasl2-dev \
     libssl-dev \
+    libsslcommon2-dev \
+    libt1-dev \
     libwebp-dev \
     libxml2-dev \
     libxpm-dev \
     libxslt1-dev \
-    pkg-config \
-    vim \
-    wget && \
+  " \
+  # Packages needed to run Apache httpd.
+  APACHE_PKGS="\
+    apache2 \
+    apache2-mpm-prefork \
+    # Fcgid mod for Apache - not a build dependency library.
+    libapache2-mod-fcgid \
+  "
+
+# Install packages we need for runtime usage.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    $RUNTIME_PKGS \
+    $APACHE_PKGS && \
     \
     # Clean up apt package lists.
     rm -rf /var/lib/apt/lists/*
@@ -59,19 +74,41 @@ RUN apt-get update && \
 # reconfigure Apache
 RUN rm -rf /var/www/*
 COPY var-www /var/www/
-COPY apache  /etc/apache2/
+COPY apache /etc/apache2/
 
-# install the phpfarm script
-RUN git clone https://github.com/fpoirotte/phpfarm.git phpfarm
+# Import our own modifications for the PhpFarm script.
+COPY phpfarm /phpfarm_mod
 
-# add customized configuration
-COPY phpfarm /phpfarm/src/
+# The PHP versions to compile.
+ENV PHP_FARM_VERSIONS="5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
+  \
+  # Flags for C Compiler Loader: make php 5.3 work again.
+  LDFLAGS="-lssl -lcrypto -lstdc++" \
+  \
+  # Add path to built PHP executables, for module building and for Apache.
+  PATH="/phpfarm/inst/bin/:$PATH"
 
-# set path
-ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
 
-# compile, then delete sources (saves space)
-RUN cd /phpfarm/src && ./docker.sh
+# Install packages needed for build.
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
+  \
+  # Install PhpFarm scripts.
+  git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
+  \
+  # Overwrite PhpFarm with our own modifications.
+  rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
+  mv /phpfarm_mod/* /phpfarm/src/ && \
+  rmdir /phpfarm_mod && \
+  \
+  # Build all PHP versions.
+  cd /phpfarm/src && \
+  ./docker.sh && \
+  \
+  # Clean up.
+  apt-get purge -y $SCRIPT_PKGS $BUILD_PKGS && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/*
 
 # expose the ports
 EXPOSE 8053 8054 8055 8056 8070 8071
@@ -80,3 +117,4 @@ EXPOSE 8053 8054 8055 8056 8070 8071
 WORKDIR /var/www
 COPY run.sh /run.sh
 CMD ["/bin/bash", "/run.sh"]
+
