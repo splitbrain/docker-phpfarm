@@ -7,14 +7,20 @@ FROM philcryer/min-wheezy:latest
 
 MAINTAINER Andreas Gohr, andi@splitbrain.org
 
-# the PHP versions to compile
-ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
-  \
-  # make php 5.3 work again
-  LDFLAGS="-lssl -lcrypto -lstdc++" \
+ENV \
+  # Packages needed for running various build scripts.
+  SCRIPT_PKGS=" \
+    # git-clone: Fix 'fatal: unable to access https://github.com/...: Problem with the SSL CA cert (path? access rights?)'
+    ca-certificates \
+    debian-archive-keyring \
+    debian-keyring \
+    git \
+    vim \
+    wget && \
+  " \
   \
   # Packages only needed for PHP build.
-  BUILD_PKGS="\
+  BUILD_PKGS=" \
     autoconf \
     build-essential \
     # Flex needed for PHP 5.1 see http://php.net/manual/en/install.unix.php
@@ -24,7 +30,7 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
   " \
   \
   # PHP runtime dependencies.
-  RUNTIME_PKGS="\
+  RUNTIME_PKGS=" \
     curl \
     imagemagick \
     libbz2-dev \
@@ -64,42 +70,41 @@ RUN apt-get update && \
     $RUNTIME_PKGS \
     $APACHE_PKGS \
     \
-    # Other packages for convenience.
-    # git-clone: Fix 'fatal: unable to access https://github.com/...: Problem with the SSL CA cert (path? access rights?)'
-    ca-certificates \
-    debian-archive-keyring \
-    debian-keyring \
-    git \
-    vim \
-    wget && \
-    \
     # Clean up apt package lists.
     rm -rf /var/lib/apt/lists/*
 
 # reconfigure Apache
 RUN rm -rf /var/www/*
 COPY var-www /var/www/
-COPY apache  /etc/apache2/
+COPY apache /etc/apache2/
 
-# install the phpfarm script
-RUN git clone https://github.com/fpoirotte/phpfarm.git phpfarm
+# Import our PhpFarm script customisations.
+COPY phpfarm /phpfarm_scripts
 
-# add customized configuration
-COPY phpfarm /phpfarm/src/
-
-# Add path to built PHP executables, for module building and for Apache.
-ENV PATH /phpfarm/inst/bin/:/usr/sbin:/usr/bin:/sbin:/bin
+# the PHP versions to compile
+ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
+  \
+  # make php 5.3 work again
+  LDFLAGS="-lssl -lcrypto -lstdc++" \
+  \
+  # Add path to built PHP executables, for module building and for Apache.
+  PATH="/phpfarm/inst/bin/:$PATH"
 
 # Install packages needed for build.
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends $BUILD_PKGS && \
+  apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
+  \
+  # install the phpfarm script and add our own customisations.
+  git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
+  mv /phpfarm_scripts/* /phpfarm/src/ && \
+  rmdir /phpfarm_scripts && \
   \
   # Build all PHP versions.
   cd /phpfarm/src && \
   ./docker.sh && \
   \
   # Clean up.
-  apt-get purge -y $BUILD_PKGS && \
+  apt-get purge -y $SCRIPT_PKGS $BUILD_PKGS && \
   apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/*
 
