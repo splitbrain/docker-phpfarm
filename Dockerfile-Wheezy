@@ -16,7 +16,7 @@ ENV \
     debian-keyring \
     git \
     vim \
-    wget && \
+    wget \
   " \
   \
   # Packages only needed for PHP build.
@@ -68,7 +68,7 @@ ENV \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     $RUNTIME_PKGS \
-    $APACHE_PKGS \
+    $APACHE_PKGS && \
     \
     # Clean up apt package lists.
     rm -rf /var/lib/apt/lists/*
