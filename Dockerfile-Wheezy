@@ -97,7 +97,7 @@ RUN apt-get update && \
   # Install PhpFarm script and add our own customisations.
   git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
   # Delete directories before overwriting them with our own.
-  rm -rf /phpfarm/src/{bzips,custom} && \
+  rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
   mv /phpfarm_scripts/* /phpfarm/src/ && \
   rmdir /phpfarm_scripts && \
   \
