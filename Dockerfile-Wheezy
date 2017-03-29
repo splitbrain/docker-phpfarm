@@ -75,28 +75,30 @@ RUN rm -rf /var/www/*
 COPY var-www /var/www/
 COPY apache /etc/apache2/
 
-# Import our PhpFarm script customisations.
-COPY phpfarm /phpfarm_scripts
+# Import our own modifications for the PhpFarm script.
+COPY phpfarm /phpfarm_mod
 
-# the PHP versions to compile
+# The PHP versions to compile.
 ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
   \
-  # make php 5.3 work again
+  # Flags for C Compiler Loader: make php 5.3 work again.
   LDFLAGS="-lssl -lcrypto -lstdc++" \
   \
   # Add path to built PHP executables, for module building and for Apache.
   PATH="/phpfarm/inst/bin/:$PATH"
 
+
 # Install packages needed for build.
 RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
-  # Install PhpFarm script and add our own customisations.
+  # Install PhpFarm scripts.
   git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
-  # Delete directories before overwriting them with our own.
+  \
+  # Overwrite PhpFarm with our own modifications.
   rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
-  mv /phpfarm_scripts/* /phpfarm/src/ && \
-  rmdir /phpfarm_scripts && \
+  mv /phpfarm_mod/* /phpfarm/src/ && \
+  rmdir /phpfarm_mod && \
   \
   # Build all PHP versions.
   cd /phpfarm/src && \
