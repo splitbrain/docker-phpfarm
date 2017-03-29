@@ -71,12 +71,7 @@ RUN apt-get update && \
 
 
 # Reconfigure Apache
-RUN rm -rf /var/www/* && \
-  # Direct logs to stdout/stderr so they will show in 'docker logs' command.
-  ln -sf /dev/stderr /var/log/apache2/error.log && \
-  ln -sf /dev/stdout /var/log/apache2/access.log && \
-  ln -sf /dev/stdout /var/log/apache2/other_vhosts_access.log
-
+RUN rm -rf /var/www/*
 # Import our Apache configs.
 COPY var-www /var/www/
 COPY apache /etc/apache2/
@@ -123,4 +118,3 @@ EXPOSE 8053 8054 8055 8056 8070 8071
 WORKDIR /var/www
 COPY run.sh /run.sh
 CMD ["/bin/bash", "/run.sh"]
-
