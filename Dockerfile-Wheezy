@@ -94,8 +94,10 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
 RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
-  # install the phpfarm script and add our own customisations.
+  # Install PhpFarm script and add our own customisations.
   git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
+  # Delete directories before overwriting them with our own.
+  rm -rf /phpfarm/src/{bzips,custom} && \
   mv /phpfarm_scripts/* /phpfarm/src/ && \
   rmdir /phpfarm_scripts && \
   \
