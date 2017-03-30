@@ -27,8 +27,8 @@ Building the image
 
 After checkout, simply run the following command:
 
-    docker build -t splitbrain/phpfarm:jessie -f Dockerfile-Jessie .
-    docker build -t splitbrain/phpfarm:wheezy -f Dockerfile-Wheezy .
+    docker build -t eugenesia/phpfarm:jessie -f Dockerfile-Jessie .
+    docker build -t eugenesia/phpfarm:wheezy -f Dockerfile-Wheezy .
 
 This will setup a Debian base system, install phpfarm, download and compile the different
 PHP versions, extensions and setup Apache. So, yes this will take a while. See the next
@@ -40,8 +40,8 @@ Downloading the image
 Simply downloading the ready made image from Docker Hub is probably the fastest
 way. Just run one of these:
 
-    docker pull splitbrain/phpfarm:wheezy
-    docker pull splitbrain/phpfarm:jessie
+    docker pull eugenesia/phpfarm:wheezy
+    docker pull eugenesia/phpfarm:jessie
 
 Running the container
 ---------------------
@@ -53,7 +53,7 @@ user.
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
     -p 8051:8051 -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 \
-    -p 8056:8056 -p 8070:8070 -p 8071:8071 splitbrain/phpfarm:jessie
+    -p 8056:8056 -p 8070:8070 -p 8071:8071 eugenesia/phpfarm:jessie
 
 Above command will also remove the container again when the process is aborted with
 CTRL-C. While running, the Apache and PHP error log is shown on STDOUT.
@@ -62,12 +62,12 @@ You can also access the PHP binaries within the container directly. Refer to the
 above for the correct names. The following command will run PHP 5.3 on your current
 working directory.
 
-    docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie php-5.3 --version
+    docker run --rm -t -i -v $PWD:/var/www:rw eugenesia/phpfarm:jessie php-5.3 --version
 
 Alternatively you can also run an interactive shell inside the container with
 your current working directory mounted.
 
-    docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie /bin/bash
+    docker run --rm -t -i -v $PWD:/var/www:rw eugenesia/phpfarm:jessie /bin/bash
 
 Loading custom php.ini settings
 -------------------------------
@@ -89,7 +89,7 @@ Here's a simple ``.gitlab-ci.yml`` example using phpunit.
     stages:
       - test
 
-    image: splitbrain/phpfarm:jessie
+    image: eugenesia/phpfarm:jessie
 
     php-5.3:
       stage: test

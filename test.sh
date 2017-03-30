@@ -15,7 +15,7 @@ CONTAINER=$( docker run -d -e APACHE_UID=$UID \
     -p 8056:8056 \
     -p 8070:8070 \
     -p 8071:8071 \
-    splitbrain/phpfarm:$TAG )
+    eugenesia/phpfarm:$TAG )
 
 if [ -z "$CONTAINER" ]; then
     echo -e "\e[31mFailed to start container\e[0m"
