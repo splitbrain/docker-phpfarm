@@ -20,7 +20,7 @@ ENV \
   BUILD_PKGS=" \
     autoconf \
     build-essential \
-    # Flex needed for PHP 5.1 see http://php.net/manual/en/install.unix.php
+    # Flex needed for PHP 5.1 & 5.2 see http://php.net/manual/en/install.unix.php
     flex \
     lemon \
     pkg-config \
