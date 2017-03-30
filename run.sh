@@ -19,7 +19,9 @@ ln -sf /dev/stderr $APACHE_LOG_DIR/error.log
 ln -sf /dev/stdout $APACHE_LOG_DIR/access.log
 ln -sf /dev/stdout $APACHE_LOG_DIR/other_vhosts_access.log
 
-apache2ctl start
+# Start Apache in the foreground - Docker needs this to keep the container
+# running.
+apache2ctl -DFOREGROUND
 
 # No need to tail as Apache log files link to stdout/stderr now.
 # tail -f /var/log/apache2/error.log
