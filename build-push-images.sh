@@ -24,9 +24,11 @@ set -vx
 
 docker build --squash -t ${hubUserRepo}:jessie -t ${hubUserRepo}:latest -f Dockerfile-Jessie . > /tmp/build-jessie.log 2>&1
 docker push ${hubUserRepo}:jessie
+docker push ${hubUserRepo}:latest
 
 docker build --squash -t ${hubUserRepo}:wheezy -f Dockerfile-Wheezy . > /tmp/build-wheezy.log 2>&1
 docker push ${hubUserRepo}:wheezy
 
 # Disable verbose.
 set +vx
+
