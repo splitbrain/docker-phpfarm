@@ -5,7 +5,7 @@
 # we use Debian as the host OS
 FROM philcryer/min-jessie:latest
 
-LABEL maintainer "Andreas Gohr <andi@splitbrain.org>, Eugene Sia <eugene@eugenesia.co.uk>"
+LABEL maintainer="Eugene Sia <eugene@eugenesia.co.uk>"
 
 ENV \
   # Packages needed for running various build scripts.
@@ -81,7 +81,7 @@ COPY apache /etc/apache2/
 COPY phpfarm /phpfarm_mod
 
 # The PHP versions to compile.
-ENV PHP_FARM_VERSIONS="5.3.29 5.4.44 5.5.38 5.6.30 7.0.17 7.1.3" \
+ENV PHP_FARM_VERSIONS="5.3.29 5.4.44 5.5.38 5.6.30 7.0.21 7.1.6" \
   \
   # Flags for C Compiler Loader: make php 5.3 work again.
   LDFLAGS="-lssl -lcrypto -lstdc++" \
@@ -118,3 +118,4 @@ EXPOSE 8053 8054 8055 8056 8070 8071
 WORKDIR /var/www
 COPY run.sh /run.sh
 CMD ["/bin/bash", "/run.sh"]
+
