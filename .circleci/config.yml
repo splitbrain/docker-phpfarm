@@ -11,9 +11,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: 
-          name: Setup build runner
-          command: apk add --no-cache bash git openssh
+      # - run:
+      #     name: Setup build runner
+      #     command: apk add --no-cache git openssh
       - run:
           name: Build and push Jessie image
           shell: /bin/bash
