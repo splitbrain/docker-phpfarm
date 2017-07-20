@@ -10,5 +10,6 @@ jobs:
       - image: docker:latest
     steps:
       - checkout
+      - setup_remote_docker
       - run: sh build-push-images.sh
       
