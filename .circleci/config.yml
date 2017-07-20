@@ -16,6 +16,7 @@ jobs:
           command: apk add --no-cache bash git openssh
       - run:
           name: Build and push Jessie image
+          shell: /bin/bash
           command: |
             docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -23,6 +24,7 @@ jobs:
             docker push eugenesia/phpfarm:latest
       - run:
           name: Build and push Wheezy image
+          shell: /bin/bash
           command: |
             docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
