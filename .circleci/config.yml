@@ -11,12 +11,16 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      # - run: sh build-push-images.sh
-      - run: |
-          docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push eugenesia/phpfarm:jessie
-          docker push eugenesia/phpfarm:latest
-          docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
-          docker push eugenesia/phpfarm:wheezy
+      - run: 
+          name: Setup build runner container
+          command: apk add --no-cache git ssh
+      - run:
+          name: Build and push
+          command: |
+            docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push eugenesia/phpfarm:jessie
+            docker push eugenesia/phpfarm:latest
+            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+            docker push eugenesia/phpfarm:wheezy
 
