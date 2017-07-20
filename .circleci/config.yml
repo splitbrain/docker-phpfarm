@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
       - image: docker:latest
     steps:
-      - checkout
       - setup_remote_docker
+      - checkout
       - run: sh build-push-images.sh
       
