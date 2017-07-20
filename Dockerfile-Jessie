@@ -95,7 +95,7 @@ RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
   # Install PhpFarm scripts.
-  git clone git@github.com:fpoirotte/phpfarm.git /phpfarm && \
+  git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
   \
   # Overwrite PhpFarm with our own modifications.
   rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
