@@ -1,8 +1,6 @@
 #!/bin/bash
 # this script builds everything for docker
 
-# Set verbose for debugging.
-set -vx
 
 if [ -z "$PHP_FARM_VERSIONS" ]; then
     echo "PHP versions not set! Aborting setup" >&2
@@ -66,7 +64,4 @@ a2enmod rewrite
 rm -rf /phpfarm/src
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-
-# Unset verbose.
-set +vx
 
