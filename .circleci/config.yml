@@ -10,5 +10,5 @@ jobs:
       - image: docker:latest
     steps:
       - checkout
-      - run: ./build-push-images.sh
+      - run: sh build-push-images.sh
       
