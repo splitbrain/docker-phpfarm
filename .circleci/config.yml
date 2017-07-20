@@ -16,18 +16,13 @@ jobs:
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
           name: Build and push Jessie image
-          # shell: /bin/bash
           command: |
-            # docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
-            docker pull eugenesia/phpfarm:jessie
-            docker pull eugenesia/phpfarm:latest
-            # docker push eugenesia/phpfarm:jessie
-            # docker push eugenesia/phpfarm:latest
+            docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+            docker push eugenesia/phpfarm:jessie
+            docker push eugenesia/phpfarm:latest
       - run:
           name: Build and push Wheezy image
-          # shell: /bin/bash
           command: |
-            # docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
-            docker pull eugenesia/phpfarm:wheezy
+            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
             docker push eugenesia/phpfarm:wheezy
 
