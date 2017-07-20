@@ -106,7 +106,7 @@ RUN set -vx && \
   \
   # Build all PHP versions.
   cd /phpfarm/src && \
-  lsof | grep docker.sh && \
+  lsof && \
   ./docker.sh && \
   \
   # Clean up.
