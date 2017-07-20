@@ -10,8 +10,6 @@ LABEL maintainer="Eugene Sia <eugene@eugenesia.co.uk>"
 ENV \
   # Packages needed for running various build scripts.
   SCRIPT_PKGS=" \
-    # git-clone: Fix 'fatal: unable to access https://github.com/...: Problem with the SSL CA cert (path? access rights?)'
-    ca-certificates \
     debian-keyring \
     git \
     wget \
@@ -27,6 +25,8 @@ ENV \
   " \
   # PHP runtime dependencies.
   RUNTIME_PKGS=" \
+    # Needed for PHP and Git to connect with SSL sites.
+    ca-certificates \
     curl \
     # apt-get complains that this is an 'essential' package.
     debian-archive-keyring \
