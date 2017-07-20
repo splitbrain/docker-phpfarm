@@ -12,6 +12,7 @@ ENV \
   SCRIPT_PKGS=" \
     debian-keyring \
     git \
+    lsof \
     wget \
   " \
   # Packages only needed for PHP build.
