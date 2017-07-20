@@ -17,12 +17,12 @@ jobs:
       - run:
           name: Build and push Jessie image
           command: |
-            docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+            docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie --squash .
             docker push eugenesia/phpfarm:jessie
             docker push eugenesia/phpfarm:latest
       - run:
           name: Build and push Wheezy image
           command: |
-            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy --squash .
             docker push eugenesia/phpfarm:wheezy
 
