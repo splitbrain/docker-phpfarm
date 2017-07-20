@@ -1,6 +1,8 @@
 #!/bin/bash
 # this script builds everything for docker
 
+set +vx
+
 if [ -z "$PHP_FARM_VERSIONS" ]; then
     echo "PHP versions not set! Aborting setup" >&2
     exit 1
@@ -63,3 +65,6 @@ a2enmod rewrite
 rm -rf /phpfarm/src
 apt-get clean
 rm -rf /var/lib/apt/lists/*
+
+set -vx
+
