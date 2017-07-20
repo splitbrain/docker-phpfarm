@@ -6,7 +6,8 @@ setup. The resulting docker image will run Apache on different ports with differ
 PHP versions accessed via FCGI. The different PHP CLI binaries are accessible as
 well.
 
-[![CircleCI](https://circleci.com/gh/eugenesia/docker-phpfarm.svg?style=svg)](https://circleci.com/gh/eugenesia/docker-phpfarm)
+[![CircleCI](https://circleci.com/gh/eugenesia/docker-phpfarm.svg?style=shield)](https://circleci.com/gh/eugenesia/docker-phpfarm)
+
 
 Port | PHP Version | Binary
 -----|-------------|-----------------------
