@@ -13,7 +13,7 @@ jobs:
       - setup_remote_docker
       - run: 
           name: Setup build runner container
-          command: apk add --no-cache git ssh
+          command: apk add --no-cache git openssh
       - run:
           name: Build and push
           command: |
