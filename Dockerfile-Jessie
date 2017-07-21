@@ -11,7 +11,6 @@ ENV \
   # Packages needed for running various build scripts.
   SCRIPT_PKGS=" \
     debian-keyring \
-    git \
     wget \
   " \
   # Packages only needed for PHP build.
@@ -97,7 +96,7 @@ RUN apt-get update && \
   # Download PhpFarm v0.2.0 scripts into /phpfarm/.
   wget -O /phpfarm.zip https://github.com/fpoirotte/phpfarm/archive/v0.2.0.zip && \
   mkdir /phpfarm && \
-  tar -xf /phpfarm.zip -C /phpfarm --strip 1 && \
+  tar -xzf /phpfarm.zip -C /phpfarm --strip 1 && \
   \
   # Overwrite PhpFarm with our own modifications.
   rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
