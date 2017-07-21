@@ -105,6 +105,9 @@ RUN apt-get update && \
   \
   # Build all PHP versions.
   cd /phpfarm/src && \
+  # Wait for docker.sh to finish moving else trying to exec a file being
+  # written will output "Text file busy" error.
+  sleep 5s && \
   ./docker.sh && \
   \
   # Clean up.
