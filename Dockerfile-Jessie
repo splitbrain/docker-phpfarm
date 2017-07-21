@@ -94,9 +94,9 @@ RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
   # Download PhpFarm v0.2.0 scripts into /phpfarm/.
-  wget -O /phpfarm.zip https://github.com/fpoirotte/phpfarm/archive/v0.2.0.zip && \
+  wget -O /phpfarm.tar.gz https://github.com/fpoirotte/phpfarm/archive/v0.2.0.tar.gz && \
   mkdir /phpfarm && \
-  tar -xzf /phpfarm.zip -C /phpfarm --strip 1 && \
+  tar -xf /phpfarm.tar.gz -C /phpfarm --strip 1 && \
   \
   # Overwrite PhpFarm with our own modifications.
   rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
