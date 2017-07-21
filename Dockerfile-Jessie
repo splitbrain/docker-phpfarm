@@ -94,8 +94,10 @@ ENV PHP_FARM_VERSIONS="5.3.29 5.4.44 5.5.38 5.6.31 7.0.21 7.1.7" \
 RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
-  # Install PhpFarm scripts.
-  git clone https://github.com/fpoirotte/phpfarm.git /phpfarm && \
+  # Download PhpFarm v0.2.0 scripts into /phpfarm/.
+  wget -O /phpfarm.zip https://github.com/fpoirotte/phpfarm/archive/v0.2.0.zip && \
+  mkdir /phpfarm && \
+  tar -xf /phpfarm.zip -C /phpfarm --strip 1 && \
   \
   # Overwrite PhpFarm with our own modifications.
   rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
