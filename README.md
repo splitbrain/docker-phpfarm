@@ -19,6 +19,7 @@ Port | PHP Version | Binary
 8056 | 5.6.31      | php-5.6
 8070 | 7.0.21      | php-7.0
 8071 | 7.1.7       | php-7.1
+8072 | 7.2.0beta1  | php-7.2
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.1 or 5.2 you have to
@@ -55,8 +56,9 @@ the Apache server and the server itself will run with the same user id as your c
 user.
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
-    -p 8051:8051 -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 \
-    -p 8056:8056 -p 8070:8070 -p 8071:8071 eugenesia/phpfarm:jessie
+      -p 8051:8051 -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 \
+      -p 8056:8056 -p 8070:8070 -p 8071:8071 -p 8072:8072 \
+      eugenesia/phpfarm:jessie
 
 Above command will also remove the container again when the process is aborted with
 CTRL-C. While running, the Apache and PHP error log is shown on STDOUT.
