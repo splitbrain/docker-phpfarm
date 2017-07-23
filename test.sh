@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -vx
 
 TAG=$1
 
@@ -15,6 +15,7 @@ CONTAINER=$( docker run -d -e APACHE_UID=$UID \
     -p 8056:8056 \
     -p 8070:8070 \
     -p 8071:8071 \
+    -p 8072:8072 \
     eugenesia/phpfarm:$TAG )
 
 if [ -z "$CONTAINER" ]; then
@@ -26,7 +27,7 @@ fi
 
 sleep 5
 
-for port in 8051 8052 8053 8054 8055 8056 8070 8071; do
+for port in 8051 8052 8053 8054 8055 8056 8070 8071 8072; do
     result=$(curl --silent http://localhost:$port/ |grep -Po 'PHP Version \d+.\d+.\d+')
     if [ -z "$result" ]; then
         echo -e "Port $port: \e[31mFAILED\e[0m"
