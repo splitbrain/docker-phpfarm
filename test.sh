@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -vx
+#!/usr/bin/env bash
 
 TAG=$1
 
