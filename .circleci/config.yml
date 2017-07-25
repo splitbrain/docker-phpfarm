@@ -15,16 +15,18 @@ jobs:
           name: Setup build runner
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
-          name: Build and push Jessie image
+          name: Jessie image: Build, test, push
           command: |
             # --squash not allowed as Docker daemon doesn't have experimental features.
             docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+            ./test.sh jessie
             docker push eugenesia/phpfarm:jessie
             docker push eugenesia/phpfarm:latest
       - run:
-          name: Build and push Wheezy image
+          name: Wheezy image: Build, test, push
           command: |
             # --squash not allowed as Docker daemon doesn't have experimental features.
             docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+            ./test.sh wheezy
             docker push eugenesia/phpfarm:wheezy
 
