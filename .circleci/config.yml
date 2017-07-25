@@ -6,8 +6,8 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: docker:latest
+      # Image for build runner.
+      - image: docker:17.06
     steps:
       - checkout
       - setup_remote_docker
