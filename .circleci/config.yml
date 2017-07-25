@@ -14,8 +14,8 @@ jobs:
       - run:
           name: Setup build runner
           command: |
-            # Install PHP to run tests.
-            apk --no-cache add php5
+            # Bash and PHP needed for test scripts.
+            apk --no-cache add bash php5
             # Needed to push built Docker images to registry.
             docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
