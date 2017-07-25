@@ -97,23 +97,28 @@ RUN apt-get update && \
   wget -O /phpfarm.tar.gz https://github.com/fpoirotte/phpfarm/archive/v0.2.0.tar.gz && \
   mkdir /phpfarm && \
   tar -xf /phpfarm.tar.gz -C /phpfarm --strip 1 && \
-  \
+  #
   # Overwrite PhpFarm with our own modifications.
   rm -rf /phpfarm/src/bzips /phpfarm/src/custom && \
   mv /phpfarm_mod/* /phpfarm/src/ && \
-  rmdir /phpfarm_mod && \
-  \
-  # Build all PHP versions.
-  cd /phpfarm/src && \
+  #
   # Wait for docker.sh to finish moving else trying to exec a file being
   # written will output "Text file busy" error.
   sleep 5s && \
+  rmdir /phpfarm_mod && \
+  #
+  # Download required bzips.
+  cd /phpfarm/src && \
+  ./bzips_download.sh && \
+  #
+  # Build all PHP versions.
   ./docker.sh && \
-  \
+  #
   # Clean up.
   apt-get purge -y $SCRIPT_PKGS $BUILD_PKGS && \
   apt-get autoremove -y && \
   rm -rf /var/lib/apt/lists/*
+
 
 # expose the ports
 EXPOSE 8053 8054 8055 8056 8070 8071 8072
