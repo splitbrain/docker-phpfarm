@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
 
 # Test the Docker image to see if it runs PHP successfully.
+# Usage: test.sh [tag]
+#   Where tag is the image tag you want to test. Can be 'latest', 'jessie' or
+#   'wheezy'.
 
 # Name of Docker image to test.
-DOCKER_IMAGE=eugenesia/phpfarm
+DOCKER_IMG=eugenesia/phpfarm
 
 # Tag of image to test e.g. 'latest', 'wheezy'.
 TAG=$1
 
 
 if [ -z $TAG ]; then
-    TAG='jessie'
+    TAG=jessie
 fi
 
 # Ports to test for.
-if [ $TAG -e 'jessie' ]; then
+if [ $TAG = jessie ]; then
     # Debian:Jessie supports PHP 5.3 and above only.
     ports='8053 8054 8055 8056 8070 8071 8072'
 else
@@ -26,12 +29,12 @@ fi
 # E.g. -p 8051:8051 -p 8052:8052 ...
 publishOption=''
 for port in $ports; do
-  publishOption="$publishOption -p 80${port}:80${port}"
+  publishOption="$publishOption -p ${port}:${port}"
 done
 
 container=$( docker run -d -e APACHE_UID=$UID \
     $publishOption \
-    eugenesia/phpfarm:$TAG )
+    $DOCKER_IMG:$TAG )
 
 if [ -z "$container" ]; then
     echo -e "\e[31mFailed to start container\e[0m"
@@ -55,12 +58,8 @@ for port in $ports; do
     fi
 done
 
-echo "Checking extensions..."
-echo
-echo
+echo -e Checking extensions...\n\n
 php extensions.php
-echo
-echo
 
 docker kill $container
 docker rm $container
