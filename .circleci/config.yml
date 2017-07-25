@@ -13,7 +13,11 @@ jobs:
       - setup_remote_docker
       - run:
           name: Setup build runner
-          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+          command: |
+            # Install PHP to run tests.
+            apk add php
+            # Needed to push built Docker images to registry.
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
           name: Jessie image - Build, test, push
           command: |
