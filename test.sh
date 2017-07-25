@@ -36,20 +36,23 @@ container=$( docker run -d -e APACHE_UID=$UID \
     $publishOption \
     $DOCKER_IMG:$TAG )
 
-if [ -z "$container" ]; then
+if [ -z $container ]; then
     echo -e "\e[31mFailed to start container\e[0m"
     exit 1
 else
     echo "$TAG container $container started. Waiting to start up"
 fi
 
+# Wait for container to start.
 sleep 5
 
 # Record results of the port test.
 portTestResult=0
+
+# Test if all required ports are showing a PHP version.
 for port in $ports; do
-    result=$(curl --silent http://localhost:$port/ |grep -Po 'PHP Version \d+.\d+.\d+')
-    if [ -z "$result" ]; then
+    result=$(curl --silent http://localhost:$port/ | grep -Eo 'PHP Version \d+\.\d+\.\d+')
+    if [ -z $result ]; then
         echo -e "Port $port: \e[31mFAILED\e[0m"
         # Set port test result to "error" (non-zero) if any port test fails.
         portTestResult=1
