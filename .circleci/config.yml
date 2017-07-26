@@ -23,7 +23,9 @@ jobs:
           name: 'Jessie: build'
           command: |
             # --squash not allowed as Docker daemon doesn't have experimental features.
-            docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+            # docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+            docker pull eugenesia/phpfarm:jessie
+            docker pull eugenesia/phpfarm:latest
       - run:
           name: 'Jessie: test and push'
           command: |
@@ -34,7 +36,8 @@ jobs:
           name: 'Wheezy: build'
           command: |
             # --squash not allowed as Docker daemon doesn't have experimental features.
-            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+            # docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+            docker pull eugenesia/phpfarm:wheezy
       - run:
           name: 'Wheezy: test and push'
           command: |
