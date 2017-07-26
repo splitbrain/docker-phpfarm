@@ -46,6 +46,7 @@ fi
 sleep 10s
 
 docker logs $container
+curl http://localhost:8053/
 
 # Record results of the port test.
 portTestResult=0
