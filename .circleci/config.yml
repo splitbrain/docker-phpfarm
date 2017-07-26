@@ -14,8 +14,8 @@ jobs:
       - run:
           name: Setup build runner
           command: |
-            # Bash, Curl, PHP needed for test scripts.
-            apk --no-cache add bash curl php5
+            # Packages needed for test scripts.
+            apk --no-cache add bash php5
             ln -s /usr/bin/php5 /usr/bin/php
             # Needed to push built Docker images to registry.
             docker login -u $DOCKER_USER -p $DOCKER_PASS
