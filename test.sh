@@ -70,9 +70,10 @@ for port in $ports; do
     fi
 done
 
+# Display status of PHP extensions.
 # extensions.php curls to localhost, which doesn't work in a CircleCI env
 # where we cannot access the created container directly.
-if [ ! -z "$CIRCLECI" ]; then
+if [ -z "$CIRCLECI" ]; then
     echo -e 'Checking extensions...\n\n'
     php extensions.php
 fi
