@@ -1,4 +1,4 @@
-#/bin/bash -vx
+#!/bin/bash -vx
 #!/usr/bin/env bash
 
 # Test the Docker image to see if it runs PHP successfully.
