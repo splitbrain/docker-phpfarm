@@ -1,3 +1,4 @@
+#/bin/bash -vx
 #!/usr/bin/env bash
 
 # Test the Docker image to see if it runs PHP successfully.
@@ -46,6 +47,8 @@ fi
 # Wait for container to start.
 sleep 10s
 
+docker logs $container
+
 # Record results of the port test.
 portTestResult=0
 
@@ -65,7 +68,7 @@ echo -e Checking extensions...\n\n
 php extensions.php
 
 docker kill $container
-# docker rm $container
+docker rm $container
 
 exit $portTestResult
 
