@@ -64,8 +64,10 @@ for port in $ports; do
     fi
 done
 
-echo -e 'Checking extensions...\n\n'
-php extensions.php
+# Don't check extensions as extensions.php queries http://localhost which
+# doesn't work on CircleCI.
+# echo -e 'Checking extensions...\n\n'
+# php extensions.php
 
 docker kill $container
 docker rm $container
