@@ -1,4 +1,3 @@
-#!/bin/bash -vx
 #!/usr/bin/env bash
 
 # Test the Docker image to see if it runs PHP successfully.
@@ -43,11 +42,7 @@ else
 fi
 
 # Wait for container to start.
-sleep 10s
-
-curl http://127.0.0.1:8053/
-docker logs $container
-docker inspect $container
+sleep 5s
 
 # Record results of the port test.
 portTestResult=0
