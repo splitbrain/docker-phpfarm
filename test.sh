@@ -64,7 +64,7 @@ for port in $ports; do
     fi
 done
 
-echo -e Checking extensions...\n\n
+echo -e 'Checking extensions...\n\n'
 php extensions.php
 
 docker kill $container
