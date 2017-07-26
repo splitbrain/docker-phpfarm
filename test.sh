@@ -44,14 +44,14 @@ else
 fi
 
 # Wait for container to start.
-sleep 5
+sleep 10s
 
 # Record results of the port test.
 portTestResult=0
 
 # Test if all required ports are showing a PHP version.
 for port in $ports; do
-    result=$(curl --silent http://localhost:$port/ | grep -Eo 'PHP Version \d+\.\d+\.\d+')
+    result=$(curl --silent http://localhost:$port/ | grep -Eo 'PHP Version [0-9]+\.[0-9]+\.[0-9]+')
     if [ -z $result ]; then
         echo -e "Port $port: \e[31mFAILED\e[0m"
         # Set port test result to "error" (non-zero) if any port test fails.
@@ -65,7 +65,7 @@ echo -e Checking extensions...\n\n
 php extensions.php
 
 docker kill $container
-docker rm $container
+# docker rm $container
 
 exit $portTestResult
 
