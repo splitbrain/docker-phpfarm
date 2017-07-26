@@ -12,12 +12,12 @@ DOCKER_IMG=eugenesia/phpfarm
 TAG=$1
 
 
-if [ -z $TAG ]; then
+if [ -z "$TAG" ]; then
     TAG=jessie
 fi
 
 # Ports to test for.
-if [ $TAG = jessie ]; then
+if [ "$TAG" = jessie ]; then
     # Debian:Jessie supports PHP 5.3 and above only.
     ports='8053 8054 8055 8056 8070 8071 8072'
 else
@@ -36,7 +36,7 @@ container=$( docker run -d -e APACHE_UID=$UID \
     $publishOption \
     $DOCKER_IMG:$TAG )
 
-if [ -z $container ]; then
+if [ -z "$container" ]; then
     echo -e "\e[31mFailed to start container\e[0m"
     exit 1
 else
@@ -52,7 +52,7 @@ portTestResult=0
 # Test if all required ports are showing a PHP version.
 for port in $ports; do
     result=$(curl --silent http://localhost:$port/ | grep -Eo 'PHP Version [0-9]+\.[0-9]+\.[0-9]+')
-    if [ -z $result ]; then
+    if [ -z "$result" ]; then
         echo -e "Port $port: \e[31mFAILED\e[0m"
         # Set port test result to "error" (non-zero) if any port test fails.
         portTestResult=1
