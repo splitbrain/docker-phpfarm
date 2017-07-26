@@ -33,9 +33,7 @@ for port in $ports; do
   publishOption="$publishOption -p ${port}:${port}"
 done
 
-container=$( docker run -d -e APACHE_UID=$UID \
-    $publishOption \
-    $DOCKER_IMG:$TAG )
+container=$( docker run -d $publishOption $DOCKER_IMG:$TAG )
 
 if [ -z "$container" ]; then
     echo -e "\e[31mFailed to start container\e[0m"
