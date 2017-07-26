@@ -28,7 +28,7 @@ jobs:
           name: 'Jessie: test and push'
           command: |
             # Do tests specially modified for CircleCI environment.
-            ./.circleci/test.sh jessie
+            ./test.sh jessie
             docker push eugenesia/phpfarm:jessie
             docker push eugenesia/phpfarm:latest
       - run:
@@ -39,7 +39,7 @@ jobs:
       - run:
           name: 'Wheezy: test and push'
           command: |
-            ./.circleci/test.sh wheezy
+            ./test.sh wheezy
             # Do tests specially modified for CircleCI environment.
             docker push eugenesia/phpfarm:wheezy
 
