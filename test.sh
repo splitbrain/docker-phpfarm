@@ -47,6 +47,7 @@ sleep 10s
 
 curl http://127.0.0.1:8053/
 docker logs $container
+docker inspect $container
 
 # Record results of the port test.
 portTestResult=0
