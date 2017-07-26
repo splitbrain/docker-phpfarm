@@ -45,8 +45,8 @@ fi
 # Wait for container to start.
 sleep 10s
 
+curl http://127.0.0.1:8053/
 docker logs $container
-curl http://localhost:8053/
 
 # Record results of the port test.
 portTestResult=0
