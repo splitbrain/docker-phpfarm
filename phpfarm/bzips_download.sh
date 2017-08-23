@@ -15,7 +15,7 @@ PHP_BZIPS=(
   http://php.net/get/php-5.6.31.tar.bz2/from/this/mirror
   http://php.net/get/php-7.0.21.tar.bz2/from/this/mirror
   http://php.net/get/php-7.1.7.tar.bz2/from/this/mirror
-  https://downloads.php.net/~pollita/php-7.2.0beta3.tar.bz2
+  https://downloads.php.net/~remi/php-7.2.0beta3.tar.bz2
 )
 
 mkdir -p bzips
