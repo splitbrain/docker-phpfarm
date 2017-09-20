@@ -17,9 +17,9 @@ Port | PHP Version | Binary
 8054 | 5.4.45      | php-5.4
 8055 | 5.5.38      | php-5.5
 8056 | 5.6.31      | php-5.6
-8070 | 7.0.21      | php-7.0
-8071 | 7.1.7       | php-7.1
-8072 | 7.2.0beta3  | php-7.2
+8070 | 7.0.23      | php-7.0
+8071 | 7.1.9       | php-7.1
+8072 | 7.2.0RC2    | php-7.2
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the
 underlying Debian base system releases. If you need PHP 5.1 or 5.2 you have to
