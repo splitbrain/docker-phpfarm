@@ -1,0 +1,45 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # Image for build runner.
+      - image: docker:17.06
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Setup build runner
+          command: |
+            # Packages needed for test scripts.
+            apk --no-cache add bash php5
+            ln -s /usr/bin/php5 /usr/bin/php
+            # Needed to push built Docker images to registry.
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
+          name: 'Jessie: build'
+          command: |
+            # --squash not allowed as Docker daemon doesn't have experimental features.
+             docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+      - run:
+          name: 'Jessie: test and push'
+          command: |
+            # Do tests specially modified for CircleCI environment.
+            ./test.sh jessie
+            docker push eugenesia/phpfarm:jessie
+            docker push eugenesia/phpfarm:latest
+      - run:
+          name: 'Wheezy: build'
+          command: |
+            # --squash not allowed as Docker daemon doesn't have experimental features.
+            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+      - run:
+          name: 'Wheezy: test and push'
+          command: |
+            ./test.sh wheezy
+            # Do tests specially modified for CircleCI environment.
+            docker push eugenesia/phpfarm:wheezy
+
