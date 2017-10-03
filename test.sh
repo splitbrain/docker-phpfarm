@@ -6,7 +6,7 @@
 #   'wheezy'.
 
 # Name of Docker image to test.
-DOCKER_IMG=eugenesia/phpfarm
+DOCKER_IMG=splitbrain/phpfarm
 
 # Tag of image to test e.g. 'latest', 'wheezy'.
 TAG=$1
