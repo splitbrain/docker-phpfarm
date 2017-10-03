@@ -5,7 +5,7 @@
 # we use Debian as the host OS
 FROM philcryer/min-jessie:latest
 
-LABEL maintainer="Eugene Sia <eugene@eugenesia.co.uk>"
+LABEL author="Andreas Gohr <andi@splitbrain.org>, Eugene Sia <eugene@eugenesia.co.uk>"
 
 ENV \
   # Packages needed for running various build scripts.
