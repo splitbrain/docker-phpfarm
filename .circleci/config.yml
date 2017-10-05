@@ -23,23 +23,23 @@ jobs:
           name: 'Jessie: build'
           command: |
             # --squash not allowed as Docker daemon doesn't have experimental features.
-             docker build -t eugenesia/phpfarm:jessie -t eugenesia/phpfarm:latest -f Dockerfile-Jessie .
+             docker build -t splitbrain/phpfarm:jessie -t splitbrain/phpfarm:latest -f Dockerfile-Jessie .
       - run:
           name: 'Jessie: test and push'
           command: |
             # Do tests specially modified for CircleCI environment.
             ./test.sh jessie
-            docker push eugenesia/phpfarm:jessie
-            docker push eugenesia/phpfarm:latest
+            docker push splitbrain/phpfarm:jessie
+            docker push splitbrain/phpfarm:latest
       - run:
           name: 'Wheezy: build'
           command: |
             # --squash not allowed as Docker daemon doesn't have experimental features.
-            docker build -t eugenesia/phpfarm:wheezy -t eugenesia/phpfarm:latest -f Dockerfile-Wheezy .
+            docker build -t splitbrain/phpfarm:wheezy -t splitbrain/phpfarm:latest -f Dockerfile-Wheezy .
       - run:
           name: 'Wheezy: test and push'
           command: |
             ./test.sh wheezy
             # Do tests specially modified for CircleCI environment.
-            docker push eugenesia/phpfarm:wheezy
+            docker push splitbrain/phpfarm:wheezy
 
