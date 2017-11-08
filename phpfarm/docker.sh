@@ -60,6 +60,10 @@ ls -l /phpfarm/inst/bin/
 # enable rewriting
 a2enmod rewrite
 
+# remove defaults
+a2dissite 000-default
+echo > /etc/apache2/ports.conf
+
 # clean up sources
 rm -rf /phpfarm/src
 apt-get clean
