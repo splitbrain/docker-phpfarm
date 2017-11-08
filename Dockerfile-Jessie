@@ -80,7 +80,7 @@ COPY apache /etc/apache2/
 COPY phpfarm /phpfarm_mod
 
 # The PHP versions to compile.
-ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.31 7.0.23 7.1.9 7.2.0RC2" \
+ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.32 7.0.25 7.1.11 7.2.0RC6" \
   \
   # Flags for C Compiler Loader: make php 5.3 work again.
   LDFLAGS="-lssl -lcrypto -lstdc++" \

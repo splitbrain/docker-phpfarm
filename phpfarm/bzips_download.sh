@@ -5,17 +5,17 @@
 # See https://github.com/fpoirotte/phpfarm/blob/v0.2.0/src/compile.sh
 
 PHP_VERSIONS=(
-  5.6.31
-  7.0.23
-  7.1.9
-  7.2.0RC2
+  5.6.32
+  7.0.25
+  7.1.11
+  7.2.0RC6
 )
 
 PHP_BZIPS=(
-  http://php.net/get/php-5.6.31.tar.bz2/from/this/mirror
-  http://php.net/get/php-7.0.23.tar.bz2/from/this/mirror
-  http://php.net/get/php-7.1.9.tar.bz2/from/this/mirror
-  https://downloads.php.net/~pollita/php-7.2.0RC2.tar.bz2
+  http://php.net/get/php-5.6.32.tar.bz2/from/this/mirror
+  http://php.net/get/php-7.0.25.tar.bz2/from/this/mirror
+  http://php.net/get/php-7.1.11.tar.bz2/from/this/mirror
+  https://downloads.php.net/~pollita/php-7.2.0RC6.tar.bz2
 )
 
 mkdir -p bzips
