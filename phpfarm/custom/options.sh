@@ -33,6 +33,7 @@ configoptions="$configoptions \
     --with-png-dir=/usr/lib \
     --with-pgsql \
     --with-xsl=/usr \
+    --with-freetype-dir=/usr/include/freetype2/ \
 "
 
 echo "--- loaded custom/options.sh ----------"
