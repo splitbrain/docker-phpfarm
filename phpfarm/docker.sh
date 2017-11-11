@@ -54,7 +54,8 @@ do
     echo "zend_extension = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/etc/php.ini && \
     cd .. && \
     rm -rf xdebug-$XDBGVERSION && \
-    rm -f $XDBGVERSION.tar.gz
+    rm -f $XDBGVERSION.tar.gz && \
+    cat xdebug.ini >> /phpfarm/inst/php-$V/etc/php.ini
 
     # enable apache config - compatible with wheezy and jessie
     a2ensite php-$V.conf
