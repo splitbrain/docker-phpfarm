@@ -7,6 +7,10 @@ if [ -z "$PHP_FARM_VERSIONS" ]; then
     exit 1
 fi
 
+# fix freetype for older php https://stackoverflow.com/a/26342869
+mkdir /usr/include/freetype2/freetype
+ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
+
 # build and symlink to major.minor
 for VERSION in $PHP_FARM_VERSIONS
 do
