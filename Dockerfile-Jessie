@@ -107,11 +107,8 @@ RUN apt-get update && \
   sleep 5s && \
   rmdir /phpfarm_mod && \
   #
-  # Download required bzips.
-  cd /phpfarm/src && \
-  ./bzips_download.sh && \
-  #
   # Build all PHP versions.
+  cd /phpfarm/src && \
   ./docker.sh && \
   #
   # Clean up.

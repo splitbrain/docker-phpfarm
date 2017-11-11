@@ -17,6 +17,8 @@ do
     cd /phpfarm/src # make absolutely sure we're in the correct directory
 
     echo "--- compiling version $VERSION -----------------------------------------"
+    # download the bzip
+    ./phpdl.sh $VERSION /phpfarm/src/bzips
 
     V=$(echo $VERSION | awk -F. '{print $1"."$2}')
 
