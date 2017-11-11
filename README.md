@@ -13,10 +13,10 @@ Port | PHP Version | Binary
 8053 | 5.3.29      | php-5.3
 8054 | 5.4.45      | php-5.4
 8055 | 5.5.38      | php-5.5
-8056 | 5.6.31      | php-5.6
-8070 | 7.0.23      | php-7.0
-8071 | 7.1.9       | php-7.1
-8072 | 7.2.0RC2    | php-7.2
+8056 | 5.6.32      | php-5.6
+8070 | 7.0.25      | php-7.0
+8071 | 7.1.11      | php-7.1
+8072 | 7.2.0RC6    | php-7.2
 
 There are two tags for this image: ``wheezy`` and ``jessie``, referring to the underlying Debian base system releases. If you need PHP 5.1 or 5.2 you have to use the ``wheezy`` tag, otherwise the ``jessie`` image provides a more modern environment.
 
@@ -31,7 +31,7 @@ After checkout, simply run the following command:
 This will setup a Debian base system, install phpfarm, download and compile the different PHP versions, extensions and setup Apache. So, yes this will take a while. See the next section for a faster alternative.
 
 Downloading the image
------------------
+---------------------
 
 Simply downloading the ready made image from Docker Hub is probably the fastest way. Just run one of these:
 
@@ -41,14 +41,21 @@ Simply downloading the ready made image from Docker Hub is probably the fastest 
 Running the container
 ---------------------
 
-The following will run the container and map all ports to their respective ports on the local machine. The current working directory will be used as the document root for the Apache server and the server itself will run with the same user id as your current user.
+The following will run the container and map all ports to their respective ports on the local machine. The current working directory (`$PWD`) will be used as the document root for the Apache server and the server itself will run with the same user id as your current user (`$UID`).
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
       -p 8051:8051 -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 \
       -p 8056:8056 -p 8070:8070 -p 8071:8071 -p 8072:8072 \
       splitbrain/phpfarm:jessie
 
-Above command will also remove the container again when the process is aborted with CTRL-C. While running, the Apache and PHP error log is shown on STDOUT.
+You can access the Apache/PHP via localhost. Eg. `http://localhost:8053` for the PHP 5.3 version.
+
+Above command will also remove the container again when the process is aborted with CTRL-C (thanks to the `--rm` option). While running, the Apache and PHP error log is shown on STDOUT.
+
+An alternative is to not isolate the container's network at all from the local machine. This makes it possible for the container to access all the services you're running locally, eg. a database. It will also automatically make all the exposed ports available locally (but you can't remap them, so they need to be available, eg. not used by anything else). To do so use the `--network host` switch:
+
+    docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
+       --network host splitbrain/phpfarm:jessie
 
 You can also access the PHP binaries within the container directly. Refer to the table above for the correct names. The following command will run PHP 5.3 on your current working directory.
 
@@ -61,7 +68,18 @@ Alternatively you can also run an interactive shell inside the container with yo
 Loading custom php.ini settings
 -------------------------------
 
-All PHP versions are compiled with the config-file-scan-dir pointing to ``/var/www/.php/``. When mounting your own project as a volume to ``/var/www/`` you can easily place custom ``.ini`` files in your project's ``.php`` directory and they should be automatically be picked up by PHP.
+All PHP versions are compiled with the config-file-scan-dir pointing to ``/var/www/.php/``. When mounting your own project as a volume to ``/var/www/`` you can easily place custom ``.ini`` files in your project's ``.php/`` directory and they should be automatically be picked up by PHP.
+
+XDebug debugging, profiling and tracing
+---------------------------------------
+
+XDebug is enabled in all of the PHP versions. It is preconfigured for immeadiate use.
+
+Profiling and tracing can be triggered through the `XDEBUG_PROFILE` and `XDEBUG_TRACE` Post/Get/Ccookie setting - no special trigger value has been set, so any value will trigger. Output files are placed into the volume you mounted to `/var/www/` with an `xdebug.` prefix.
+
+Remote debugging is triggered through the `XDEBUG_SESSION` cookie. It uses the `remote_connect_back` setting, so it expects a debugger on port `9000` (the default) on the IP that requested the page.
+
+Of course you can always reconfigure xdebug through a custom ini file as described above.
 
 Using the image for Testing in Gitlab-CI
 ----------------------------------------
@@ -155,7 +173,7 @@ sqlite3      |         |         |    ✓    |    ✓    |    ✓    |    ✓   
 standard     |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 tokenizer    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 wddx         |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
-xdebug       |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |
+xdebug       |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 xml          |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 xmlreader    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
 xmlwriter    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓    |    ✓
