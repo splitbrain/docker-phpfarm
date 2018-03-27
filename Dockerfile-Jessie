@@ -20,6 +20,7 @@ ENV \
     # Flex needed for PHP 5.1 & 5.2 see http://php.net/manual/en/install.unix.php
     flex \
     lemon \
+    bison \
     pkg-config \
   " \
   # PHP runtime dependencies.
@@ -50,6 +51,7 @@ ENV \
     libxml2-dev \
     libxpm-dev \
     libxslt1-dev \
+    libzip-dev \
   " \
   # Packages needed to run Apache httpd.
   APACHE_PKGS="\
@@ -80,7 +82,7 @@ COPY apache /etc/apache2/
 COPY phpfarm /phpfarm_mod
 
 # The PHP versions to compile.
-ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.32 7.0.25 7.1.11 7.2.0RC6" \
+ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.34 7.0.28 7.1.15 7.2.3 x.x.x" \
   \
   # Flags for C Compiler Loader: make php 5.3 work again.
   LDFLAGS="-lssl -lcrypto -lstdc++" \
@@ -93,8 +95,8 @@ ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.32 7.0.25 7.1.11 7.2.0RC6" \
 RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
-  # Download PhpFarm v0.2.0 scripts into /phpfarm/.
-  wget -O /phpfarm.tar.gz https://github.com/fpoirotte/phpfarm/archive/v0.2.0.tar.gz && \
+  # Download PhpFarm scripts into /phpfarm/.
+  wget -O /phpfarm.tar.gz https://github.com/fpoirotte/phpfarm/archive/v0.3.0.tar.gz && \
   mkdir /phpfarm && \
   tar -xf /phpfarm.tar.gz -C /phpfarm --strip 1 && \
   #
@@ -118,7 +120,7 @@ RUN apt-get update && \
 
 
 # expose the ports
-EXPOSE 8053 8054 8055 8056 8070 8071 8072
+EXPOSE 8000 8053 8054 8055 8056 8070 8071 8072
 
 # run it
 WORKDIR /var/www

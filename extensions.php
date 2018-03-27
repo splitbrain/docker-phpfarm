@@ -2,7 +2,7 @@
 /**
  * This builds the table of supported PHP extensions
  */
-$ports=array(8051,8052,8053,8054,8055,8056,8070,8071,8072);
+$ports=array(8051,8052,8053,8054,8055,8056,8070,8071,8072,8000);
 
 # Ensure that chars show in browser correctly.
 header('Content-Type: text/plain; charset=utf-8');
@@ -29,7 +29,15 @@ ksort($allmods);
 # Extension | PHP 5.1 | PHP 5.2 | ... | PHP 7.1
 print 'Extension    ';
 foreach($ports as $port) {
-    echo '| PHP '.substr($port,2,1).'.'.substr($port,3,1).' ';
+    $major = substr($port,2,1);
+    $minor = substr($port,3,1);
+    if($major) {
+        $version = "PHP $major.$minor";
+    } else {
+        $version = "nightly";
+    }
+
+    echo '| '.$version.' ';
 }
 echo "\n";
 
