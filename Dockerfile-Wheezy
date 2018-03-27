@@ -81,7 +81,7 @@ COPY apache /etc/apache2/
 COPY phpfarm /phpfarm_mod
 
 # The PHP versions to compile.
-ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.45 5.5.38 5.6.32 7.0.25 7.1.11 7.2.0RC6" \
+ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.45 5.5.38 5.6.32 7.0.28 7.1.15 7.2.3" \
   \
   # Flags for C Compiler Loader: make php 5.3 work again.
   LDFLAGS="-lssl -lcrypto -lstdc++" \
@@ -94,7 +94,7 @@ ENV PHP_FARM_VERSIONS="5.1.6 5.2.17 5.3.29 5.4.45 5.5.38 5.6.32 7.0.25 7.1.11 7.
 RUN apt-get update && \
   apt-get install -y --no-install-recommends $SCRIPT_PKGS $BUILD_PKGS && \
   \
-  # Download PhpFarm v0.2.0 scripts into /phpfarm/.
+  # Download PhpFarm scripts into /phpfarm/.
   wget -O /phpfarm.tar.gz https://github.com/fpoirotte/phpfarm/archive/v0.2.0.tar.gz && \
   mkdir /phpfarm && \
   tar -xf /phpfarm.tar.gz -C /phpfarm --strip 1 && \
@@ -119,7 +119,7 @@ RUN apt-get update && \
 
 
 # expose the ports
-EXPOSE 8051 8052 8053 8054 8055 8056 8070 8071 8072
+EXPOSE 8000 8051 8052 8053 8054 8055 8056 8070 8071 8072
 
 # run it
 WORKDIR /var/www
