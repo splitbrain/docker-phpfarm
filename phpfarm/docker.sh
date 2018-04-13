@@ -37,8 +37,10 @@ do
         XDBGVERSION="XDEBUG_2_4_1" # old release for old PHP versions
     elif [[ $VERSION == *"RC"* ]]; then
         XDBGVERSION="master"       # master for RCs
+    elif [ "$V" == "5.5" ] || [ "$V" == "5.6" ]; then
+        XDBGVERSION="XDEBUG_2_5_5" # 2.5.X release for PHP 5.5 and 5.6
     else
-        XDBGVERSION="XDEBUG_2_5_1" # stable release for all others
+        XDBGVERSION="2.6.0" # 2.6.X release for PHP 7+
     fi
 
     echo "--- compiling xdebug $XDBGVERSION for php $VERSION ---------------------"
@@ -75,4 +77,3 @@ echo > /etc/apache2/ports.conf
 rm -rf /phpfarm/src
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-
