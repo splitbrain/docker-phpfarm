@@ -7,6 +7,8 @@ if [ -z "$PHP_FARM_VERSIONS" ]; then
     exit 1
 fi
 
+export $MAKE_OPTIONS="-j$(nproc)"
+
 # fix freetype for older php https://stackoverflow.com/a/26342869
 mkdir /usr/include/freetype2/freetype
 ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
@@ -50,7 +52,7 @@ do
     cd xdebug-$XDBGVERSION && \
     phpize-$V && \
     ./configure --enable-xdebug --with-php-config=/phpfarm/inst/bin/php-config-$V && \
-    make && \
+    make $MAKE_OPTIONS && \
     cp -v modules/xdebug.so /phpfarm/inst/php-$V/lib/ && \
     echo "zend_extension_debug = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/etc/php.ini && \
     echo "zend_extension = /phpfarm/inst/php-$V/lib/xdebug.so" >> /phpfarm/inst/php-$V/etc/php.ini && \
