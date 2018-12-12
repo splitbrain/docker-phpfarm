@@ -41,11 +41,13 @@ do
         XDBGVERSION="master"       # master for RCs
     elif [ "$V" == "5.5" ] || [ "$V" == "5.6" ]; then
         XDBGVERSION="XDEBUG_2_5_5" # 2.5.X release for PHP 5.5 and 5.6
+    elif [ "$V" == "7.0" ] || [ "$V" == "7.1" ] || [ "$V" == "7.2" ]; then
+        XDBGVERSION="2.6.0" # 2.6.X release for PHP 7.0 - 7.2
     else
-        XDBGVERSION="2.6.0" # 2.6.X release for PHP 7+
+        XDBGVERSION="2.7.0beta1" # 7.3
     fi
 
-    echo "--- compiling xdebug $XDBGVERSION for php $VERSION ---------------------"
+    echo "--- compiling xdebug $XDBGVERSION for php $V ---------------------"
 
     wget https://github.com/xdebug/xdebug/archive/$XDBGVERSION.tar.gz && \
     tar -xzvf $XDBGVERSION.tar.gz && \
