@@ -43,8 +43,10 @@ do
         XDBGVERSION="XDEBUG_2_5_5" # 2.5.X release for PHP 5.5 and 5.6
     elif [ "$V" == "7.0" ] || [ "$V" == "7.1" ] || [ "$V" == "7.2" ]; then
         XDBGVERSION="2.6.0" # 2.6.X release for PHP 7.0 - 7.2
+    elif [ "$V" == "7.3" ] || [ "$V" == "7.4" ]; then
+        XDBGVERSION="2.9.8" # 7.3 and 7.4
     else
-        XDBGVERSION="2.7.0beta1" # 7.3
+        XDBGVERSION="3.0.1" # 8.0+
     fi
 
     echo "--- compiling xdebug $XDBGVERSION for php $V ---------------------"

@@ -27,7 +27,7 @@ fi
 if [[ $VERSION == *"RC"* ]]; then
     URL="https://downloads.php.net/~pollita/php-$VERSION.tar.bz2"
 elif [[ $VERSION == "x.x.x" ]]; then
-    URL="https://codeload.github.com/php/php-src/legacy.tar.gz/master"
+    URL="https://github.com/php/php-src/tarball/master"
     OUT="$DIR/php-$VERSION.tar.gz"
 elif [ $VERSION \< "5.6" ]; then
     URL="http://museum.php.net/php5/php-$VERSION.tar.bz2"

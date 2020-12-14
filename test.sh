@@ -19,7 +19,7 @@ fi
 # Ports to test for.
 if [ "$TAG" = jessie ]; then
     # Debian:Jessie supports PHP 5.3 and above only.
-    ports='8053 8054 8055 8056 8070 8071 8072 8073 8000'
+    ports='8053 8054 8055 8056 8070 8071 8072 8073 8074 8080 8000'
 else
     # Debian:Wheezy supports all versions til 7.2, no nightlies
     ports='8051 8052 8053 8054 8055 8056 8070 8071 8072'

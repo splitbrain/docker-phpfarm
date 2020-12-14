@@ -44,6 +44,7 @@ ENV \
     libmcrypt-dev \
     libmhash-dev \
     libmysqlclient-dev \
+    libonig-dev \
     libpng-dev \
     libpq-dev \
     libsasl2-dev \
@@ -84,7 +85,7 @@ COPY apache /etc/apache2/
 COPY phpfarm /phpfarm_mod
 
 # The PHP versions to compile.
-ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.39 7.0.33 7.1.25 7.2.13 7.3.0 x.x.x" \
+ENV PHP_FARM_VERSIONS="5.3.29 5.4.45 5.5.38 5.6.39 7.0.33 7.1.25 7.2.34 7.3.25 7.4.13 8.0.0" \
   \
   # Flags for C Compiler Loader: make php 5.3 work again.
   LDFLAGS="-lssl -lcrypto -lstdc++" \
@@ -122,7 +123,7 @@ RUN apt-get update && \
 
 
 # expose the ports
-EXPOSE 8000 8053 8054 8055 8056 8070 8071 8072 8073
+EXPOSE 8053 8054 8055 8056 8070 8071 8072 8073 8074 8080
 
 # run it
 WORKDIR /var/www
